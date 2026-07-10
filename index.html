@@ -35,6 +35,19 @@
 .auth-box{display:grid;gap:8px;border:1px solid var(--line);background:#fffdf7;border-radius:15px;padding:12px}
 .auth-box input{width:100%;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:12px;padding:9px 11px;font:inherit}
 .auth-status{font-size:12px;color:var(--muted);line-height:1.45}
+
+.workflow-card h2{font-size:21px;margin-top:4px}
+.setup-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.setup-card{background:#fffdf7;border:1px solid var(--line);border-radius:16px;padding:16px}
+.setup-card h3{font-size:17px;margin-bottom:10px}
+.workflow-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:16px 0}
+.workflow-step{background:rgba(255,250,240,.7);border:1px solid var(--line);border-radius:14px;padding:10px 12px;font-size:12px;color:var(--muted)}
+.workflow-step strong{display:block;color:var(--ink);font-size:13px}
+@media(max-width:720px){.workflow-strip{grid-template-columns:1fr 1fr}}
+
+.login-banner{border-radius:12px;padding:10px 12px;background:var(--red-2);color:#75311f;font-weight:800;font-size:13px}
+.login-banner.signed-in{background:var(--green-2);color:#244b38}
+.auth-box button:disabled{opacity:.55;cursor:not-allowed}
 @media(max-width:820px){.chart-grid{grid-template-columns:1fr}}
 </style>
 </head>
@@ -47,32 +60,30 @@
       <p class="sub">A calmer, sharper tracker for starting DSA without spiralling. The goal is not to “finish LeetCode”; it is to build interview reflexes: identify the pattern, explain the invariant, code clean Java, test edge cases, then revisit cold.</p>
       <div class="mentor-note"><strong>Mentor verdict:</strong> yes — this plan is sufficient for campus internship/PPO prep if you treat revision as non-negotiable. The current list has <span id="verdictLc">133</span> LeetCode tasks across <span id="verdictUnique">130</span> unique problems, plus revision/mock/study days. That is already beyond Blind 75 and close to NeetCode-style pattern coverage; your danger is inconsistency, not lack of questions.</div>
     </div>
-    <aside class="quick">
-      <div class="settings"><span>Day 1:</span><input type="date" id="startDateInput"><span id="dayOfJourney" class="mono"></span></div>
+    <aside class="quick workflow-card">
+      <div>
+        <div class="eyebrow">Today's workflow</div>
+        <h2>Open → Solve → Note → Revisit</h2>
+        <div class="small" id="dayOfJourney">Today is plan day 1</div>
+      </div>
       <div class="kpi-grid">
         <div class="kpi"><div class="num" id="kpiSolved">0</div><div class="lbl">Solved alone</div></div>
         <div class="kpi"><div class="num" id="kpiRevisited">0</div><div class="lbl">Cold revisits</div></div>
         <div class="kpi"><div class="num" id="kpiLc">133</div><div class="lbl">LC tasks</div></div>
         <div class="kpi"><div class="num" id="kpiDays">90</div><div class="lbl">Day plan</div></div>
       </div>
-      <div class="auth-box">
-        <div class="small"><strong>Cloud sync</strong> <span id="syncStatus" class="mono">local only</span></div>
-        <input id="authEmail" type="email" placeholder="Email for Firebase sync">
-        <input id="authPassword" type="password" placeholder="Password">
-        <div class="actions"><button class="btn primary" id="signInBtn">Sign in</button><button class="btn" id="signUpBtn">Create account</button><button class="btn warn" id="signOutBtn">Sign out</button></div>
-        <div class="auth-status" id="authStatus">Firebase is optional. Paste your config in the script to enable cross-device sync.</div>
-      </div>
-      <div class="small">Progress is saved locally first. If Firebase is configured and you sign in, it syncs across your devices too.</div>
-      <div class="actions"><button class="btn" id="exportBtn">Export progress</button><button class="btn" id="importBtn">Import progress</button><button class="btn warn" id="resetBtn">Reset</button><input id="importFile" type="file" accept="application/json" style="display:none"></div>
+      <div class="actions"><button class="btn primary" onclick="switchTab('today')">Start today</button><button class="btn" onclick="switchTab('setup')">Sync / settings</button></div>
+      <div class="small">Daily screen first. Everything else is tucked away so prep feels like a sequence, not a wall.</div>
     </aside>
   </section>
 
   <nav class="tabs">
-    <button class="tab active" data-tab="today">Today</button>
+    <button class="tab active" data-tab="setup">Setup / Login</button>
+    <button class="tab" data-tab="today">Today</button>
     <button class="tab" data-tab="all">All Problems</button>
     <button class="tab" data-tab="progress">Progress</button>
-    <button class="tab" data-tab="audit">Mentor Audit</button>
-    <button class="tab" data-tab="resources">Study Resources</button>
+    <button class="tab" data-tab="audit">Mentor Plan</button>
+    <button class="tab" data-tab="resources">Resources</button>
   </nav>
 
   <section class="panel">
@@ -82,7 +93,34 @@
   </section>
 
   <main>
-    <section id="view-today" class="view active"></section>
+    <section id="view-setup" class="view active">
+      <div class="panel">
+        <div class="panel-head"><div><h2>Setup your account first</h2><div class="small">Sign in or create an account before starting the sprint. Your progress still saves locally, but Firebase login gives proper phone/laptop sync.</div></div><div class="small mono" id="setupGateStatus">login recommended</div></div>
+        <div class="setup-grid">
+          <div class="setup-card">
+            <h3>Journey settings</h3>
+            <div class="settings"><span>Day 1 start date:</span><input type="date" id="startDateInput"><span class="small">Changing this only shifts the displayed plan day.</span></div>
+          </div>
+          <div class="setup-card">
+            <h3>Login system</h3>
+            <div class="auth-box">
+              <div class="login-banner" id="loginBanner">Not signed in yet</div>
+              <div class="small"><strong>Status:</strong> <span id="syncStatus" class="mono">local only</span></div>
+              <input id="authEmail" type="email" placeholder="Email for Firebase sync">
+              <input id="authPassword" type="password" placeholder="Password">
+              <div class="actions"><button class="btn primary" id="signInBtn">Sign in</button><button class="btn" id="signUpBtn">Create account</button><button class="btn warn" id="signOutBtn" disabled>Sign out</button><button class="btn" onclick="switchTab('today')">Continue to Today</button></div>
+              <div class="auth-status" id="authStatus">Create an account once, then sign in with the same email on every device.</div>
+            </div>
+          </div>
+          <div class="setup-card">
+            <h3>Backup controls</h3>
+            <p class="small">Export before major changes. Import is useful if you switch devices before cloud sync is ready.</p>
+            <div class="actions"><button class="btn" id="exportBtn">Export progress</button><button class="btn" id="importBtn">Import progress</button><button class="btn warn" id="resetBtn">Reset</button><input id="importFile" type="file" accept="application/json" style="display:none"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="view-today" class="view"></section>
     <section id="view-all" class="view">
       <div class="panel">
         <div class="panel-head"><div><h2>All problems</h2><div class="small">Use this like a command center: filter by topic, difficulty, or problem/revision type; every row has LeetCode + study links.</div></div><div class="small mono" id="allCount"></div></div>
@@ -120,7 +158,7 @@ const FIREBASE_CONFIG = {
 const FIREBASE_ENABLED = Boolean(FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.projectId);
 const STORAGE_KEY='dsa90_mentor_state_v2', SETTINGS_KEY='dsa90_mentor_settings_v2';
 const REVIEW_INTERVALS=[3,7,21,45];
-let state={}, settings={startDate:null}, selectedDay=null, currentTab='today';
+let state={}, settings={startDate:null}, selectedDay=null, currentTab='setup';
 let firebaseApp=null, firebaseAuth=null, firebaseDb=null, currentUser=null, cloudUnsubscribe=null, cloudSaveTimer=null, applyingCloud=false;
 function todayISO(){return new Date().toISOString().slice(0,10)}
 function addDays(iso,n){const d=new Date(iso+'T00:00:00');d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)}
@@ -297,7 +335,24 @@ function renderWeeklyBars(){
 function getState(id){if(!state[id])state[id]={solved:false,revisited:false,alone:false,notes:'',solvedDate:null,nextReview:null,stage:0};return state[id]}
 function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));localStorage.setItem(SETTINGS_KEY,JSON.stringify(settings));queueCloudSave()}
 function load(){try{state=JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}')}catch(e){state={}};try{settings=JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}')}catch(e){settings={}};if(!settings.startDate)settings.startDate=todayISO();PROBLEMS.forEach(p=>getState(p.id))}
-function setAuthStatus(msg){const el=document.getElementById('authStatus');if(el)el.textContent=msg;const sync=document.getElementById('syncStatus');if(sync)sync.textContent=currentUser?'synced':'local only'}
+function setAuthStatus(msg){const el=document.getElementById('authStatus');if(el)el.textContent=msg;const sync=document.getElementById('syncStatus');if(sync)sync.textContent=currentUser?'synced':'local only';updateAuthUI()}
+function updateAuthUI(){
+  const signedIn=Boolean(currentUser);
+  const banner=document.getElementById('loginBanner');
+  const gate=document.getElementById('setupGateStatus');
+  const email=document.getElementById('authEmail');
+  const password=document.getElementById('authPassword');
+  const signIn=document.getElementById('signInBtn');
+  const signUp=document.getElementById('signUpBtn');
+  const signOut=document.getElementById('signOutBtn');
+  if(banner){banner.textContent=signedIn?`Signed in: ${currentUser.email}`:'Not signed in yet';banner.classList.toggle('signed-in',signedIn)}
+  if(gate)gate.textContent=signedIn?'cloud sync active':'login recommended';
+  if(email)email.disabled=signedIn;
+  if(password){password.disabled=signedIn;if(signedIn)password.value=''}
+  if(signIn)signIn.disabled=signedIn;
+  if(signUp)signUp.disabled=signedIn;
+  if(signOut)signOut.disabled=!signedIn;
+}
 function cloudRef(){return firebaseDb&&currentUser?firebaseDb.collection('dsaTrackerUsers').doc(currentUser.uid).collection('trackers').doc('dsa90'):null}
 function queueCloudSave(){if(!currentUser||!firebaseDb||applyingCloud)return;clearTimeout(cloudSaveTimer);cloudSaveTimer=setTimeout(async()=>{try{await cloudRef().set({settings,state,updatedAt:firebase.firestore.FieldValue.serverTimestamp(),version:2},{merge:true});setAuthStatus(`Synced as ${currentUser.email}`)}catch(e){setAuthStatus('Local saved, cloud sync failed. Check Firebase rules/config.')}},650)}
 function mergeCloudData(data){
@@ -356,14 +411,15 @@ function itemCard(p){const st=getState(p.id), diff=difficulty(p), premium=PREMIU
 function renderList(el, list, empty='Nothing here yet.'){el.innerHTML=list.length?list.map(itemCard).join(''):`<div class="empty">${empty}</div>`}
 function renderToday(){const day=Math.max(1,Math.min(90,selectedDay||dayNumberFor(todayISO())));const todays=PROBLEMS.filter(p=>p.day===day);const overdue=PROBLEMS.filter(p=>getState(p.id).nextReview&&getState(p.id).nextReview<=todayISO()&&!todays.includes(p));document.getElementById('view-today').innerHTML=`<div class="panel"><div class="panel-head"><div><h2>Day ${day} queue</h2><div class="small">Do not speedrun. For each new problem: 10–15 min thinking, then hint if stuck, then code, then dry-run, then write one note.</div></div><div class="actions"><button class="btn" onclick="selectedDay=Math.max(1,${day}-1);render()">← Prev</button><button class="btn" onclick="selectedDay=Math.min(90,${day}+1);render()">Next →</button></div></div><div id="todayList"></div></div>${overdue.length?`<div class="panel"><div class="panel-head"><div><h2>Revision due</h2><div class="small">These are the rows your future self asked you to revisit. They beat new problems for interview retention.</div></div><div class="small mono">${overdue.length} due</div></div><div id="dueList"></div></div>`:''}`;renderList(document.getElementById('todayList'),todays);if(overdue.length)renderList(document.getElementById('dueList'),overdue)}
 function renderAll(){const q=document.getElementById('searchInput')?.value?.toLowerCase()||'', topic=document.getElementById('topicFilter')?.value||'all', diff=document.getElementById('difficultyFilter')?.value||'all', type=document.getElementById('typeFilter')?.value||'all';let list=PROBLEMS.filter(p=>{const hay=`${p.day} ${p.lc} ${p.name} ${p.topic}`.toLowerCase();if(q&&!hay.includes(q))return false;if(topic!=='all'&&p.topic!==topic)return false;if(diff!=='all'&&difficulty(p)!==diff)return false;if(type==='leetcode'&&!p.lc)return false;if(type==='revision'&&p.lc)return false;if(type==='premium'&&!PREMIUM.has(p.lc))return false;return true});document.getElementById('allCount').textContent=`${list.length} shown`;renderList(document.getElementById('allList'),list)}
-function renderTrail(){const trail=document.getElementById('trail');const todayDay=dayNumberFor(todayISO());trail.innerHTML='';for(let d=1;d<=90;d++){const rows=PROBLEMS.filter(p=>p.day===d), solved=rows.filter(p=>getState(p.id).solved).length;const mostlyRevision=rows.length&&rows.every(isRevision);const div=document.createElement('button');div.className='day-dot '+(mostlyRevision?'revision ': solved===0?'':solved===rows.length?'full':'partial')+(d===todayDay?' today':'')+(d===(selectedDay||todayDay)?' selected':'');div.title=`Day ${d}: ${solved}/${rows.length} logged`;div.onclick=()=>{selectedDay=d;currentTab='today';document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab==='today'));document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-today'));render()};trail.appendChild(div)}const solved=PROBLEMS.filter(p=>getState(p.id).solved).length;document.getElementById('trailStat').textContent=`${solved}/${PROBLEMS.length} rows logged`}
+function renderTrail(){const trail=document.getElementById('trail');const todayDay=dayNumberFor(todayISO());trail.innerHTML='';for(let d=1;d<=90;d++){const rows=PROBLEMS.filter(p=>p.day===d), solved=rows.filter(p=>getState(p.id).solved).length;const mostlyRevision=rows.length&&rows.every(isRevision);const div=document.createElement('button');div.className='day-dot '+(mostlyRevision?'revision ': solved===0?'':solved===rows.length?'full':'partial')+(d===todayDay?' today':'')+(d===(selectedDay||todayDay)?' selected':'');div.title=`Day ${d}: ${solved}/${rows.length} logged`;div.onclick=()=>{selectedDay=d;currentTab='today';switchTab('today')};trail.appendChild(div)}const solved=PROBLEMS.filter(p=>getState(p.id).solved).length;document.getElementById('trailStat').textContent=`${solved}/${PROBLEMS.length} rows logged`}
 function renderKpis(){const solved=PROBLEMS.filter(p=>getState(p.id).solved).length, alone=PROBLEMS.filter(p=>getState(p.id).alone).length, revisited=PROBLEMS.filter(p=>getState(p.id).revisited).length;document.getElementById('kpiSolved').textContent=alone;document.getElementById('kpiRevisited').textContent=revisited;document.getElementById('kpiLc').textContent=PROBLEMS.filter(p=>p.lc).length;document.getElementById('verdictLc').textContent=PROBLEMS.filter(p=>p.lc).length;document.getElementById('verdictUnique').textContent=new Set(PROBLEMS.filter(p=>p.lc).map(p=>p.lc)).size;document.getElementById('dayOfJourney').textContent=`Today is plan day ${Math.max(1,dayNumberFor(todayISO()))}`}
 function renderProgress(){const byTopic={};PROBLEMS.forEach(p=>{if(!byTopic[p.topic])byTopic[p.topic]={total:0,solved:0};byTopic[p.topic].total++;if(getState(p.id).solved)byTopic[p.topic].solved++});const rows=Object.entries(byTopic).sort((a,b)=>b[1].total-a[1].total).map(([name,v])=>`<div class="topic-row"><div>${name}</div><div class="track"><div class="fill" style="width:${Math.round(v.solved/v.total*100)}%"></div></div><div class="mono">${v.solved}/${v.total}</div></div>`).join('');document.getElementById('view-progress').innerHTML=`<div class="panel"><div class="panel-head"><div><h2>Progress trends</h2><div class="small">Use the curve to catch drift early. If green falls far below dashed for more than a week, reduce new problems and do revision first.</div></div></div><div class="chart-grid">${renderLineChart()}${renderWeeklyBars()}</div><div class="progress-list">${rows}</div></div>`}
 function renderAudit(){document.getElementById('view-audit').innerHTML=`<div class="panel"><div class="panel-head"><div><h2>Deep mentor audit</h2><div class="small">This is the honest assessment of the plan for October internship/PPO rounds.</div></div></div><div class="audit-grid"><div class="audit-card good"><h3>Is it sufficient?</h3><p>Yes. 133 LeetCode rows, 130 unique problems, and planned revision days are enough for campus interviews if you can explain patterns and code clean Java without editorial dependency.</p></div><div class="audit-card watch"><h3>What to watch</h3><p>Four rows are commonly premium/locked on LeetCode: 252, 253, 261, 323. Keep them as concepts, but if blocked, substitute free equivalents from NeetCode/Grind 75.</p></div><div class="audit-card watch"><h3>Intentional repeats</h3><p>LC 53, 75, and 23 appear twice. That is okay because the second appearance changes the lens: Kadane/greedy, two-pointer, heap revisit. I marked them clearly.</p></div><div class="audit-card risk"><h3>Main weakness</h3><p>Bit manipulation and LRU/cache design are light. If you finish early, add Single Number, Number of 1 Bits, Counting Bits, Sum of Two Integers, and LRU Cache.</p></div></div></div><div class="panel"><div class="panel-head"><div><h2>90-day phase strategy</h2><div class="small">Your brain should feel the plan getting harder, not randomly heavier.</div></div></div><div class="phase-grid"><div class="phase"><h3>Days 1–14 · Warm start</h3><p>Arrays, strings, hashing, recursion basics. Build confidence and Java muscle memory.</p></div><div class="phase"><h3>Days 15–35 · Interview patterns</h3><p>Two pointers, sliding window, linked list, stack, binary search, intervals. This is the campus-interview core.</p></div><div class="phase"><h3>Days 36–56 · Recursion structures</h3><p>Backtracking, trees, heaps, tries, hashing. Speak out loud while solving; these expose reasoning gaps quickly.</p></div><div class="phase"><h3>Days 57–70 · Graphs</h3><p>BFS/DFS, topo sort, union-find, shortest path. Draw first, code second.</p></div><div class="phase"><h3>Days 71–84 · DP + greedy</h3><p>Learn state definition and transition. DP is not magic; it is naming the repeated decision.</p></div><div class="phase"><h3>Days 85–90 · Interview mode</h3><p>No heavy new learning. Revisit misses, do mocks, revise Java/OOP/DBMS/OS, sleep properly.</p></div></div></div>`}
 function renderResources(){document.getElementById('view-resources').innerHTML=`<div class="panel"><div class="panel-head"><div><h2>Study resources embedded</h2><div class="small">Use one main roadmap and a few references. Too many tabs are just anxiety wearing a fake moustache.</div></div></div><div class="resource-grid"><a class="resource-card" href="https://neetcode.io/practice/practice/neetcode150" target="_blank"><h3>NeetCode 150</h3><p>Best broad benchmark for pattern coverage; your list is close in size and spirit.</p></a><a class="resource-card" href="https://www.techinterviewhandbook.org/grind75/" target="_blank"><h3>Grind 75</h3><p>Useful if you need a tighter minimum list or want to customize by time and difficulty.</p></a><a class="resource-card" href="https://leetcode.com/explore/interview/card/leetcodes-interview-crash-course-data-structures-and-algorithms/" target="_blank"><h3>LeetCode Crash Course</h3><p>Good structured explanations for common DS&A patterns.</p></a><a class="resource-card" href="https://takeuforward.org/strivers-a2z-dsa-course/strivers-a2z-dsa-course-sheet-2/" target="_blank"><h3>Striver A2Z</h3><p>Useful for India-campus style preparation and fundamentals-first sequencing.</p></a><a class="resource-card" href="https://docs.oracle.com/javase/8/docs/api/java/util/package-summary.html" target="_blank"><h3>Java Collections</h3><p>Know ArrayList, HashMap, HashSet, PriorityQueue, ArrayDeque, TreeMap enough to choose correctly.</p></a><a class="resource-card" href="https://www.pramp.com/" target="_blank"><h3>Mock interviews</h3><p>Practice explaining, clarifying, and debugging under mild pressure before October.</p></a></div><div class="deploy-note"><strong>Deployment note:</strong> this is a static site, so GitHub Pages, Netlify, or Vercel will work well. Progress is stored in your current browser only; use Export progress weekly, or add Supabase/Firebase later if you want phone/laptop sync.</div></div><div class="panel"><h2>Daily method</h2><ol><li>Read the problem and restate it in plain English.</li><li>Write brute force first in 2–3 lines of thought.</li><li>Name the pattern: hashmap, two pointers, BFS, DP state, etc.</li><li>Code in Java with small helper methods only when they clarify.</li><li>Dry-run one normal case and one edge case.</li><li>Use the short hint only after 10 honest minutes, not immediately.</li><li>Write one note: the mistake you would repeat.</li><li>Revisit cold after 3, 7, 21, and 45 days.</li></ol></div>`}
 function setupFilters(){const topics=['all',...Array.from(new Set(PROBLEMS.map(p=>p.topic))).sort()];const sel=document.getElementById('topicFilter');if(sel&&!sel.dataset.ready){sel.innerHTML=topics.map(t=>`<option value="${t}">${t==='all'?'All topics':t}</option>`).join('');['searchInput','topicFilter','difficultyFilter','typeFilter'].forEach(id=>document.getElementById(id)?.addEventListener('input',renderAll));sel.dataset.ready='1'}}
-function render(){document.getElementById('startDateInput').value=settings.startDate;renderKpis();renderTrail();setupFilters();renderToday();renderAll();renderProgress();renderAudit();renderResources()}
-document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{currentTab=btn.dataset.tab;document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t===btn));document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+currentTab));render()}));
+function render(){document.getElementById('startDateInput').value=settings.startDate;renderKpis();renderTrail();setupFilters();renderToday();renderAll();renderProgress();renderAudit();renderResources();updateAuthUI()}
+function switchTab(name){currentTab=name;document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===name));document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+name));render()}
+document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>switchTab(btn.dataset.tab)));
 document.getElementById('startDateInput').addEventListener('change',e=>{settings.startDate=e.target.value||todayISO();selectedDay=null;save();render()});
 document.getElementById('exportBtn').addEventListener('click',()=>{const blob=new Blob([JSON.stringify({settings,state,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='dsa-90-day-progress.json';a.click();URL.revokeObjectURL(a.href)});
 document.getElementById('importBtn').addEventListener('click',()=>document.getElementById('importFile').click());
