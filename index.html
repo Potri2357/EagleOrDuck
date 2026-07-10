@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>90-Day DSA Placement Sprint</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bitter:wght@600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+:root{
+  --bg:#f4efe3; --paper:#fffaf0; --paper-2:#eee2c8; --ink:#173235; --muted:#5a6d6d;
+  --line:#d5c7a8; --green:#2f6b4f; --green-2:#dcebdd; --gold:#b67b19; --gold-2:#f4e3bd;
+  --red:#b94b33; --red-2:#f5ddd4; --blue:#245b73; --blue-2:#d9edf4; --violet:#63519a; --violet-2:#e4def7;
+  --shadow:0 18px 55px rgba(23,50,53,.11); --radius:18px;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:radial-gradient(circle at top left,#fff8e7 0,#f4efe3 34%,#eadfc7 100%);color:var(--ink);font-family:Inter,system-ui,sans-serif;min-height:100vh}.wrap{max-width:1180px;margin:0 auto;padding:28px 18px 70px}h1,h2,h3{font-family:Bitter,serif;margin:0;letter-spacing:-.02em}a{color:inherit}.mono{font-family:'IBM Plex Mono',monospace}.hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:18px;align-items:stretch}.hero-card,.panel,.item,.resource-card{background:rgba(255,250,240,.86);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter:blur(10px)}.hero-card{padding:28px}.eyebrow{font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.16em;color:var(--gold);font-size:12px;font-weight:700}.hero h1{font-size:clamp(32px,5vw,58px);line-height:.95;margin:10px 0}.sub{color:var(--muted);font-size:15.5px;line-height:1.65;max-width:760px}.mentor-note{margin-top:18px;padding:14px 16px;border-radius:14px;background:linear-gradient(135deg,var(--green-2),#fff7e6);border:1px solid #c6d7b8;color:#25473a;font-size:14px;line-height:1.55}.quick{padding:20px;display:grid;gap:12px}.kpi-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.kpi{border:1px solid var(--line);background:#fffdf7;border-radius:15px;padding:14px}.kpi .num{font-family:Bitter,serif;font-size:34px;font-weight:800}.kpi .lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.settings{display:flex;gap:10px;align-items:center;flex-wrap:wrap;color:var(--muted);font-size:13px}.settings input,.filters input,.filters select{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:12px;padding:9px 11px;font:inherit}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}.tab{border:1px solid var(--line);border-radius:999px;background:rgba(255,250,240,.72);color:var(--muted);padding:10px 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;cursor:pointer}.tab.active{background:var(--ink);border-color:var(--ink);color:#fffaf0}.panel{padding:18px;margin-bottom:16px}.panel-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-end;margin-bottom:14px}.panel-head h2{font-size:23px}.small{font-size:12px;color:var(--muted);line-height:1.55}.trail{display:grid;grid-template-columns:repeat(30,1fr);gap:4px}.day-dot{height:22px;border-radius:7px;border:1px solid #cbbd9d;background:#e7dcc4;cursor:pointer;position:relative}.day-dot.full{background:var(--green);border-color:var(--green)}.day-dot.partial{background:var(--gold);border-color:var(--gold)}.day-dot.revision{background:transparent;border:2px dashed var(--blue)}.day-dot.today::after{content:'▲';position:absolute;top:-17px;left:50%;transform:translateX(-50%);color:var(--red);font-size:11px}.day-dot.selected{outline:3px solid var(--ink);outline-offset:1px}.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}.legend span{font-size:11px;color:var(--muted);display:flex;gap:6px;align-items:center}.legend i{width:12px;height:12px;border-radius:4px;display:inline-block}.filters{display:grid;grid-template-columns:2fr repeat(3,minmax(130px,1fr));gap:10px;margin-bottom:14px}.view{display:none}.view.active{display:block}.item{padding:15px;margin-bottom:10px;box-shadow:none}.item.solved{border-left:6px solid var(--green)}.item.revisit{border-left:6px solid var(--gold)}.item.problem-hard{border-left:6px solid var(--red)}.item.study{border-left:6px solid var(--blue)}.item-top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.title-line{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.item-name{font-weight:800;font-size:15px}.badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.badge{font-family:'IBM Plex Mono',monospace;font-size:10.5px;border-radius:999px;padding:3px 8px;background:var(--paper-2);color:var(--ink);border:1px solid rgba(0,0,0,.03)}.badge.easy{background:var(--green-2);color:#24523d}.badge.medium{background:var(--gold-2);color:#78500e}.badge.hard{background:var(--red-2);color:#87351f}.badge.premium{background:var(--violet-2);color:var(--violet)}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.btn{border:1px solid var(--line);background:#fffdf7;border-radius:999px;padding:8px 11px;font-size:12px;font-weight:700;text-decoration:none;cursor:pointer;color:var(--ink)}.btn.primary{background:var(--ink);color:#fffaf0;border-color:var(--ink)}.btn.done{background:var(--green);color:white;border-color:var(--green)}.btn.warn{background:var(--gold-2);border-color:#dfbc74}.note{width:100%;margin-top:10px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;min-height:42px;background:#fffdf7;font:13px Inter,sans-serif;color:var(--ink)}.empty{padding:38px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:18px;background:rgba(255,250,240,.5)}.audit-grid,.phase-grid,.resource-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.audit-card,.phase,.resource-card{padding:16px}.audit-card.good{background:var(--green-2)}.audit-card.watch{background:var(--gold-2)}.audit-card.risk{background:var(--red-2)}.audit-card h3,.phase h3,.resource-card h3{font-size:17px;margin-bottom:8px}.audit-card p,.phase p,.resource-card p,li{font-size:13.5px;line-height:1.6;color:var(--muted)}.phase{background:#fffdf7;border:1px solid var(--line);border-radius:16px}.progress-list{display:grid;gap:8px}.topic-row{display:grid;grid-template-columns:minmax(140px,220px) 1fr 56px;gap:10px;align-items:center;font-size:13px}.track{height:10px;background:var(--paper-2);border-radius:999px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,var(--green),#75a76a)}.footer{margin-top:30px;text-align:center;color:var(--muted);font-size:12px}.mobile-bar{display:none}@media(max-width:820px){.hero{grid-template-columns:1fr}.filters{grid-template-columns:1fr 1fr}.trail{grid-template-columns:repeat(15,1fr)}.item-top{display:block}.kpi-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:540px){.wrap{padding:16px 12px 60px}.hero-card{padding:20px}.filters{grid-template-columns:1fr}.panel-head{display:block}.topic-row{grid-template-columns:1fr}.kpi .num{font-size:28px}.actions .btn{flex:1;text-align:center}.trail{grid-template-columns:repeat(10,1fr)}}
+</style>
+<style>
+.hint{margin-top:10px;background:rgba(244,227,189,.48);border:1px dashed #d6b56f;border-radius:13px;padding:10px 12px;font-size:13px;line-height:1.55;color:#6d4b16}
+.hint summary{cursor:pointer;font-weight:800;color:var(--ink)}
+.hint p{margin:6px 0 0}
+.chart-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.6fr);gap:14px;margin-bottom:16px}
+.chart-card{background:#fffdf7;border:1px solid var(--line);border-radius:16px;padding:14px;overflow:hidden}
+.chart-title{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin-bottom:8px}
+.chart-title h3{font-size:16px}
+.chart-title span{font-size:11px;color:var(--muted)}
+.chart{width:100%;height:auto;display:block}
+.chart-axis{stroke:#cabd9d;stroke-width:1}
+.chart-gridline{stroke:#e4d9c1;stroke-width:1}
+.chart-plan{fill:none;stroke:var(--gold);stroke-width:2;stroke-dasharray:5 5}
+.chart-solved{fill:none;stroke:var(--green);stroke-width:3}
+.chart-bar{fill:var(--green)}
+.chart-bar-bg{fill:var(--paper-2)}
+.chart-label{fill:var(--muted);font:11px 'IBM Plex Mono',monospace}
+.deploy-note{margin-top:12px;padding:12px 14px;background:var(--blue-2);border:1px solid #b5d2de;border-radius:14px;color:#274c5c;font-size:13px;line-height:1.55}
+.auth-box{display:grid;gap:8px;border:1px solid var(--line);background:#fffdf7;border-radius:15px;padding:12px}
+.auth-box input{width:100%;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:12px;padding:9px 11px;font:inherit}
+.auth-status{font-size:12px;color:var(--muted);line-height:1.45}
+@media(max-width:820px){.chart-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="hero-card">
+      <div class="eyebrow">SSN CSE · Internship/PPO sprint · Java-first</div>
+      <h1>90-Day DSA Placement Sprint</h1>
+      <p class="sub">A calmer, sharper tracker for starting DSA without spiralling. The goal is not to “finish LeetCode”; it is to build interview reflexes: identify the pattern, explain the invariant, code clean Java, test edge cases, then revisit cold.</p>
+      <div class="mentor-note"><strong>Mentor verdict:</strong> yes — this plan is sufficient for campus internship/PPO prep if you treat revision as non-negotiable. The current list has <span id="verdictLc">133</span> LeetCode tasks across <span id="verdictUnique">130</span> unique problems, plus revision/mock/study days. That is already beyond Blind 75 and close to NeetCode-style pattern coverage; your danger is inconsistency, not lack of questions.</div>
+    </div>
+    <aside class="quick">
+      <div class="settings"><span>Day 1:</span><input type="date" id="startDateInput"><span id="dayOfJourney" class="mono"></span></div>
+      <div class="kpi-grid">
+        <div class="kpi"><div class="num" id="kpiSolved">0</div><div class="lbl">Solved alone</div></div>
+        <div class="kpi"><div class="num" id="kpiRevisited">0</div><div class="lbl">Cold revisits</div></div>
+        <div class="kpi"><div class="num" id="kpiLc">133</div><div class="lbl">LC tasks</div></div>
+        <div class="kpi"><div class="num" id="kpiDays">90</div><div class="lbl">Day plan</div></div>
+      </div>
+      <div class="auth-box">
+        <div class="small"><strong>Cloud sync</strong> <span id="syncStatus" class="mono">local only</span></div>
+        <input id="authEmail" type="email" placeholder="Email for Firebase sync">
+        <input id="authPassword" type="password" placeholder="Password">
+        <div class="actions"><button class="btn primary" id="signInBtn">Sign in</button><button class="btn" id="signUpBtn">Create account</button><button class="btn warn" id="signOutBtn">Sign out</button></div>
+        <div class="auth-status" id="authStatus">Firebase is optional. Paste your config in the script to enable cross-device sync.</div>
+      </div>
+      <div class="small">Progress is saved locally first. If Firebase is configured and you sign in, it syncs across your devices too.</div>
+      <div class="actions"><button class="btn" id="exportBtn">Export progress</button><button class="btn" id="importBtn">Import progress</button><button class="btn warn" id="resetBtn">Reset</button><input id="importFile" type="file" accept="application/json" style="display:none"></div>
+    </aside>
+  </section>
+
+  <nav class="tabs">
+    <button class="tab active" data-tab="today">Today</button>
+    <button class="tab" data-tab="all">All Problems</button>
+    <button class="tab" data-tab="progress">Progress</button>
+    <button class="tab" data-tab="audit">Mentor Audit</button>
+    <button class="tab" data-tab="resources">Study Resources</button>
+  </nav>
+
+  <section class="panel">
+    <div class="panel-head"><div><h2>The 90-day trail</h2><div class="small">Click any day to inspect its queue. Green means all listed tasks for that day are solved; gold means partially solved; dashed means mostly revision/study/mock.</div></div><div class="small mono" id="trailStat"></div></div>
+    <div class="trail" id="trail"></div>
+    <div class="legend"><span><i style="background:#e7dcc4"></i>not reached</span><span><i style="background:var(--gold)"></i>partial</span><span><i style="background:var(--green)"></i>complete</span><span><i style="border:2px dashed var(--blue);background:transparent"></i>revision/study</span><span style="color:var(--red)">▲ today</span></div>
+  </section>
+
+  <main>
+    <section id="view-today" class="view active"></section>
+    <section id="view-all" class="view">
+      <div class="panel">
+        <div class="panel-head"><div><h2>All problems</h2><div class="small">Use this like a command center: filter by topic, difficulty, or problem/revision type; every row has LeetCode + study links.</div></div><div class="small mono" id="allCount"></div></div>
+        <div class="filters"><input id="searchInput" placeholder="Search problem, topic, LC #..."><select id="topicFilter"></select><select id="difficultyFilter"><option value="all">All difficulty</option><option>Easy</option><option>Medium</option><option>Hard</option><option>Study</option></select><select id="typeFilter"><option value="all">All rows</option><option value="leetcode">LeetCode only</option><option value="revision">Revision/study/mock</option><option value="premium">Premium caution</option></select></div>
+        <div id="allList"></div>
+      </div>
+    </section>
+    <section id="view-progress" class="view"></section>
+    <section id="view-audit" class="view"></section>
+    <section id="view-resources" class="view"></section>
+  </main>
+  <div class="footer">Built for a frightened-but-serious third-year student. Fear gets one chair in the room; it does not get the steering wheel.</div>
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+const PROBLEMS = [{"id": "p1", "day": 1, "lc": 1, "name": "Two Sum", "topic": "Arrays/Hashing"}, {"id": "p2", "day": 1, "lc": 121, "name": "Best Time to Buy and Sell Stock", "topic": "Arrays"}, {"id": "p3", "day": 2, "lc": 217, "name": "Contains Duplicate", "topic": "Arrays/Hashing"}, {"id": "p4", "day": 3, "lc": 53, "name": "Maximum Subarray (Kadane's)", "topic": "Arrays"}, {"id": "p5", "day": 3, "lc": 238, "name": "Product of Array Except Self", "topic": "Arrays"}, {"id": "p6", "day": 4, "lc": 283, "name": "Move Zeroes", "topic": "Arrays"}, {"id": "p7", "day": 4, "lc": 287, "name": "Find the Duplicate Number", "topic": "Arrays"}, {"id": "p8", "day": 5, "lc": 88, "name": "Merge Sorted Array", "topic": "Arrays"}, {"id": "p9", "day": 5, "lc": 189, "name": "Rotate Array", "topic": "Arrays"}, {"id": "p10", "day": 6, "lc": 242, "name": "Valid Anagram", "topic": "Strings/Hashing"}, {"id": "p11", "day": 6, "lc": 125, "name": "Valid Palindrome", "topic": "Strings"}, {"id": "p12", "day": 7, "lc": 14, "name": "Longest Common Prefix", "topic": "Strings"}, {"id": "p13", "day": 7, "lc": 151, "name": "Reverse Words in a String", "topic": "Strings"}, {"id": "p14", "day": 8, "lc": 49, "name": "Group Anagrams", "topic": "Strings/Hashing"}, {"id": "p15", "day": 8, "lc": 20, "name": "Valid Parentheses", "topic": "Strings/Stack"}, {"id": "p16", "day": 9, "lc": 344, "name": "Reverse String (recursive)", "topic": "Recursion"}, {"id": "p17", "day": 9, "lc": 509, "name": "Fibonacci Number", "topic": "Recursion"}, {"id": "p18", "day": 10, "lc": 50, "name": "Pow(x, n)", "topic": "Recursion/Math"}, {"id": "p19", "day": 10, "lc": 69, "name": "Sqrt(x)", "topic": "Math/Binary Search"}, {"id": "p20", "day": 11, "lc": 204, "name": "Count Primes (Sieve)", "topic": "Math"}, {"id": "p21", "day": 11, "lc": 202, "name": "Happy Number", "topic": "Math"}, {"id": "p22", "day": 12, "lc": 75, "name": "Sort Colors (Dutch Nat. Flag)", "topic": "Sorting/Two Pointers"}, {"id": "p23", "day": 13, "lc": 215, "name": "Kth Largest Element in an Array", "topic": "Sorting/Heap"}, {"id": "p24", "day": 14, "lc": 0, "name": "Revision Day: redo 5 random problems from Days 1-13 cold", "topic": "Revision"}, {"id": "p25", "day": 15, "lc": 167, "name": "Two Sum II - Input Array Is Sorted", "topic": "Two Pointers"}, {"id": "p26", "day": 15, "lc": 15, "name": "3Sum", "topic": "Two Pointers"}, {"id": "p27", "day": 16, "lc": 11, "name": "Container With Most Water", "topic": "Two Pointers"}, {"id": "p28", "day": 16, "lc": 42, "name": "Trapping Rain Water", "topic": "Two Pointers"}, {"id": "p29", "day": 17, "lc": 75, "name": "Sort Colors (revisit as two-pointer)", "topic": "Two Pointers"}, {"id": "p30", "day": 18, "lc": 3, "name": "Longest Substring Without Repeating Characters", "topic": "Sliding Window"}, {"id": "p31", "day": 18, "lc": 424, "name": "Longest Repeating Character Replacement", "topic": "Sliding Window"}, {"id": "p32", "day": 19, "lc": 76, "name": "Minimum Window Substring", "topic": "Sliding Window"}, {"id": "p33", "day": 19, "lc": 239, "name": "Sliding Window Maximum", "topic": "Sliding Window/Deque"}, {"id": "p34", "day": 20, "lc": 0, "name": "Revision Day: redo 2 sliding window problems cold", "topic": "Revision"}, {"id": "p35", "day": 21, "lc": 206, "name": "Reverse Linked List", "topic": "Linked List"}, {"id": "p36", "day": 21, "lc": 21, "name": "Merge Two Sorted Lists", "topic": "Linked List"}, {"id": "p37", "day": 22, "lc": 143, "name": "Reorder List", "topic": "Linked List"}, {"id": "p38", "day": 22, "lc": 19, "name": "Remove Nth Node From End of List", "topic": "Linked List"}, {"id": "p39", "day": 23, "lc": 141, "name": "Linked List Cycle", "topic": "Linked List"}, {"id": "p40", "day": 23, "lc": 138, "name": "Copy List with Random Pointer", "topic": "Linked List"}, {"id": "p41", "day": 24, "lc": 2, "name": "Add Two Numbers", "topic": "Linked List"}, {"id": "p42", "day": 24, "lc": 23, "name": "Merge k Sorted Lists", "topic": "Linked List/Heap"}, {"id": "p43", "day": 25, "lc": 155, "name": "Min Stack", "topic": "Stack"}, {"id": "p44", "day": 25, "lc": 150, "name": "Evaluate Reverse Polish Notation", "topic": "Stack"}, {"id": "p45", "day": 26, "lc": 739, "name": "Daily Temperatures", "topic": "Monotonic Stack"}, {"id": "p46", "day": 26, "lc": 496, "name": "Next Greater Element I", "topic": "Monotonic Stack"}, {"id": "p47", "day": 26, "lc": 503, "name": "Next Greater Element II", "topic": "Monotonic Stack"}, {"id": "p48", "day": 27, "lc": 232, "name": "Implement Queue using Stacks", "topic": "Stack/Queue"}, {"id": "p49", "day": 27, "lc": 225, "name": "Implement Stack using Queues", "topic": "Stack/Queue"}, {"id": "p50", "day": 27, "lc": 84, "name": "Largest Rectangle in Histogram", "topic": "Monotonic Stack"}, {"id": "p51", "day": 28, "lc": 704, "name": "Binary Search", "topic": "Binary Search"}, {"id": "p52", "day": 28, "lc": 33, "name": "Search in Rotated Sorted Array", "topic": "Binary Search"}, {"id": "p53", "day": 29, "lc": 153, "name": "Find Minimum in Rotated Sorted Array", "topic": "Binary Search"}, {"id": "p54", "day": 29, "lc": 34, "name": "Find First and Last Position of Element in Sorted Array", "topic": "Binary Search"}, {"id": "p55", "day": 30, "lc": 74, "name": "Search a 2D Matrix", "topic": "Binary Search"}, {"id": "p56", "day": 30, "lc": 875, "name": "Koko Eating Bananas", "topic": "Binary Search on Answer"}, {"id": "p57", "day": 31, "lc": 4, "name": "Median of Two Sorted Arrays", "topic": "Binary Search (Hard)"}, {"id": "p58", "day": 32, "lc": 56, "name": "Merge Intervals", "topic": "Intervals"}, {"id": "p59", "day": 32, "lc": 57, "name": "Insert Interval", "topic": "Intervals"}, {"id": "p60", "day": 33, "lc": 435, "name": "Non-overlapping Intervals", "topic": "Intervals"}, {"id": "p61", "day": 33, "lc": 252, "name": "Meeting Rooms", "topic": "Intervals"}, {"id": "p62", "day": 33, "lc": 253, "name": "Meeting Rooms II", "topic": "Intervals"}, {"id": "p63", "day": 34, "lc": 0, "name": "Revision Day: redo 3 random Phase 2 problems cold, timed", "topic": "Revision"}, {"id": "p64", "day": 35, "lc": 0, "name": "Revision Day: redo 3 more random Phase 2 problems cold, timed", "topic": "Revision"}, {"id": "p65", "day": 36, "lc": 78, "name": "Subsets", "topic": "Backtracking"}, {"id": "p66", "day": 36, "lc": 90, "name": "Subsets II", "topic": "Backtracking"}, {"id": "p67", "day": 37, "lc": 46, "name": "Permutations", "topic": "Backtracking"}, {"id": "p68", "day": 37, "lc": 39, "name": "Combination Sum", "topic": "Backtracking"}, {"id": "p69", "day": 38, "lc": 40, "name": "Combination Sum II", "topic": "Backtracking"}, {"id": "p70", "day": 38, "lc": 79, "name": "Word Search", "topic": "Backtracking"}, {"id": "p71", "day": 39, "lc": 51, "name": "N-Queens", "topic": "Backtracking"}, {"id": "p72", "day": 39, "lc": 131, "name": "Palindrome Partitioning", "topic": "Backtracking"}, {"id": "p73", "day": 40, "lc": 104, "name": "Maximum Depth of Binary Tree", "topic": "Trees"}, {"id": "p74", "day": 40, "lc": 100, "name": "Same Tree", "topic": "Trees"}, {"id": "p75", "day": 41, "lc": 226, "name": "Invert Binary Tree", "topic": "Trees"}, {"id": "p76", "day": 41, "lc": 102, "name": "Binary Tree Level Order Traversal", "topic": "Trees/BFS"}, {"id": "p77", "day": 42, "lc": 98, "name": "Validate Binary Search Tree", "topic": "BST"}, {"id": "p78", "day": 42, "lc": 235, "name": "Lowest Common Ancestor of a BST", "topic": "BST"}, {"id": "p79", "day": 43, "lc": 236, "name": "Lowest Common Ancestor of a Binary Tree", "topic": "Trees"}, {"id": "p80", "day": 43, "lc": 124, "name": "Binary Tree Maximum Path Sum", "topic": "Trees"}, {"id": "p81", "day": 44, "lc": 543, "name": "Diameter of Binary Tree", "topic": "Trees"}, {"id": "p82", "day": 44, "lc": 297, "name": "Serialize and Deserialize Binary Tree", "topic": "Trees"}, {"id": "p83", "day": 45, "lc": 230, "name": "Kth Smallest Element in a BST", "topic": "BST"}, {"id": "p84", "day": 45, "lc": 105, "name": "Construct Binary Tree from Preorder and Inorder Traversal", "topic": "Trees"}, {"id": "p85", "day": 45, "lc": 110, "name": "Balanced Binary Tree", "topic": "Trees"}, {"id": "p86", "day": 46, "lc": 703, "name": "Kth Largest Element in a Stream", "topic": "Heap"}, {"id": "p87", "day": 46, "lc": 1046, "name": "Last Stone Weight", "topic": "Heap"}, {"id": "p88", "day": 47, "lc": 973, "name": "K Closest Points to Origin", "topic": "Heap"}, {"id": "p89", "day": 47, "lc": 347, "name": "Top K Frequent Elements", "topic": "Heap"}, {"id": "p90", "day": 48, "lc": 295, "name": "Find Median from Data Stream", "topic": "Heap (Hard)"}, {"id": "p91", "day": 48, "lc": 621, "name": "Task Scheduler", "topic": "Heap/Greedy"}, {"id": "p92", "day": 49, "lc": 23, "name": "Merge k Sorted Lists (revisit with heap)", "topic": "Heap"}, {"id": "p93", "day": 50, "lc": 208, "name": "Implement Trie (Prefix Tree)", "topic": "Trie"}, {"id": "p94", "day": 50, "lc": 211, "name": "Design Add and Search Words Data Structure", "topic": "Trie"}, {"id": "p95", "day": 51, "lc": 212, "name": "Word Search II", "topic": "Trie/Backtracking"}, {"id": "p96", "day": 51, "lc": 128, "name": "Longest Consecutive Sequence", "topic": "Hashing"}, {"id": "p97", "day": 52, "lc": 560, "name": "Subarray Sum Equals K", "topic": "Hashing"}, {"id": "p98", "day": 52, "lc": 706, "name": "Design HashMap", "topic": "Hashing"}, {"id": "p99", "day": 52, "lc": 705, "name": "Design HashSet", "topic": "Hashing"}, {"id": "p100", "day": 53, "lc": 0, "name": "Revision Day: redo 2-3 tree/BST problems cold", "topic": "Revision"}, {"id": "p101", "day": 54, "lc": 0, "name": "Revision Day: redo 2-3 heap/trie problems cold", "topic": "Revision"}, {"id": "p102", "day": 55, "lc": 0, "name": "Study Java Collections internals (HashMap, ArrayList vs LinkedList vs TreeMap)", "topic": "Java Fundamentals"}, {"id": "p103", "day": 56, "lc": 0, "name": "Revision Day: redo 2-3 hashing problems cold", "topic": "Revision"}, {"id": "p104", "day": 57, "lc": 200, "name": "Number of Islands", "topic": "Graphs/BFS-DFS"}, {"id": "p105", "day": 57, "lc": 133, "name": "Clone Graph", "topic": "Graphs"}, {"id": "p106", "day": 58, "lc": 695, "name": "Max Area of Island", "topic": "Graphs"}, {"id": "p107", "day": 58, "lc": 417, "name": "Pacific Atlantic Water Flow", "topic": "Graphs"}, {"id": "p108", "day": 59, "lc": 130, "name": "Surrounded Regions", "topic": "Graphs"}, {"id": "p109", "day": 59, "lc": 994, "name": "Rotting Oranges", "topic": "Graphs/Multi-source BFS"}, {"id": "p110", "day": 60, "lc": 0, "name": "Revision Day: redo 2 grid-graph problems cold", "topic": "Revision"}, {"id": "p111", "day": 61, "lc": 207, "name": "Course Schedule", "topic": "Graphs/Topological Sort"}, {"id": "p112", "day": 61, "lc": 210, "name": "Course Schedule II", "topic": "Graphs/Topological Sort"}, {"id": "p113", "day": 62, "lc": 261, "name": "Graph Valid Tree", "topic": "Graphs/Union-Find"}, {"id": "p114", "day": 62, "lc": 323, "name": "Number of Connected Components in an Undirected Graph", "topic": "Graphs/Union-Find"}, {"id": "p115", "day": 63, "lc": 684, "name": "Redundant Connection", "topic": "Union-Find"}, {"id": "p116", "day": 63, "lc": 721, "name": "Accounts Merge", "topic": "Union-Find"}, {"id": "p117", "day": 64, "lc": 0, "name": "Revision Day: redo 2 topo-sort/union-find problems cold", "topic": "Revision"}, {"id": "p118", "day": 65, "lc": 743, "name": "Network Delay Time", "topic": "Graphs/Dijkstra"}, {"id": "p119", "day": 66, "lc": 787, "name": "Cheapest Flights Within K Stops", "topic": "Graphs/Bellman-Ford"}, {"id": "p120", "day": 67, "lc": 1631, "name": "Path With Minimum Effort", "topic": "Graphs/Binary Search+Dijkstra"}, {"id": "p121", "day": 68, "lc": 127, "name": "Word Ladder", "topic": "Graphs/BFS"}, {"id": "p122", "day": 69, "lc": 0, "name": "Revision Day: redo 3 graph problems cold, mixed BFS/DFS/Union-Find", "topic": "Revision"}, {"id": "p123", "day": 70, "lc": 0, "name": "Revision Day: redo 3 more graph problems cold, timed", "topic": "Revision"}, {"id": "p124", "day": 71, "lc": 70, "name": "Climbing Stairs", "topic": "DP - 1D"}, {"id": "p125", "day": 71, "lc": 198, "name": "House Robber", "topic": "DP - 1D"}, {"id": "p126", "day": 72, "lc": 213, "name": "House Robber II", "topic": "DP - 1D"}, {"id": "p127", "day": 72, "lc": 300, "name": "Longest Increasing Subsequence", "topic": "DP - 1D"}, {"id": "p128", "day": 73, "lc": 139, "name": "Word Break", "topic": "DP - 1D"}, {"id": "p129", "day": 73, "lc": 91, "name": "Decode Ways", "topic": "DP - 1D"}, {"id": "p130", "day": 74, "lc": 62, "name": "Unique Paths", "topic": "DP - Grid"}, {"id": "p131", "day": 74, "lc": 64, "name": "Minimum Path Sum", "topic": "DP - Grid"}, {"id": "p132", "day": 75, "lc": 1143, "name": "Longest Common Subsequence", "topic": "DP - 2D"}, {"id": "p133", "day": 75, "lc": 72, "name": "Edit Distance", "topic": "DP - 2D"}, {"id": "p134", "day": 76, "lc": 322, "name": "Coin Change", "topic": "DP - Knapsack"}, {"id": "p135", "day": 76, "lc": 518, "name": "Coin Change II", "topic": "DP - Knapsack"}, {"id": "p136", "day": 77, "lc": 416, "name": "Partition Equal Subset Sum", "topic": "DP - Knapsack"}, {"id": "p137", "day": 77, "lc": 494, "name": "Target Sum", "topic": "DP - Knapsack"}, {"id": "p138", "day": 78, "lc": 5, "name": "Longest Palindromic Substring", "topic": "DP - Strings"}, {"id": "p139", "day": 78, "lc": 647, "name": "Palindromic Substrings", "topic": "DP - Strings"}, {"id": "p140", "day": 79, "lc": 97, "name": "Interleaving String", "topic": "DP - Strings"}, {"id": "p141", "day": 80, "lc": 115, "name": "Distinct Subsequences", "topic": "DP - Strings (Hard)"}, {"id": "p142", "day": 81, "lc": 55, "name": "Jump Game", "topic": "Greedy"}, {"id": "p143", "day": 81, "lc": 45, "name": "Jump Game II", "topic": "Greedy"}, {"id": "p144", "day": 82, "lc": 134, "name": "Gas Station", "topic": "Greedy"}, {"id": "p145", "day": 82, "lc": 53, "name": "Maximum Subarray (revisit - greedy lens)", "topic": "Greedy/DP"}, {"id": "p146", "day": 83, "lc": 0, "name": "Revision Day: redo 3 DP problems cold, timed", "topic": "Revision"}, {"id": "p147", "day": 84, "lc": 0, "name": "Revision Day: redo 3 more DP problems cold, timed", "topic": "Revision"}, {"id": "p148", "day": 85, "lc": 0, "name": "Revision Day: revisit every 'Needs Revisit' problem from Days 1-56", "topic": "Revision"}, {"id": "p149", "day": 86, "lc": 0, "name": "Revision Day: revisit every 'Needs Revisit' problem from Days 57-84", "topic": "Revision"}, {"id": "p150", "day": 87, "lc": 0, "name": "Mock interview (friend/senior/Pramp) - practice thinking out loud", "topic": "Mock Interview"}, {"id": "p151", "day": 88, "lc": 0, "name": "Solve 3-4 questions from LeetCode 'Company Tag' filter", "topic": "Company-Specific"}, {"id": "p152", "day": 89, "lc": 0, "name": "Revise OOP, DBMS, OS fundamentals", "topic": "CS Fundamentals"}, {"id": "p153", "day": 90, "lc": 0, "name": "Light review of pattern cheat-sheet only. No new problems.", "topic": "Final Review"}];
+const EASY = new Set([1,14,20,21,53,70,88,100,104,121,125,141,202,206,217,226,232,242,283,344,509,543,572,704,705,706,703,1046,496,225,110,155,191,136]);
+const HARD = new Set([4,23,42,51,72,76,84,97,115,124,127,212,239,295,297,115,23]);
+const PREMIUM = new Set([252,253,261,323]);
+const SLUG_OVERRIDES = {50:'powx-n',69:'sqrtx',75:'sort-colors',53:'maximum-subarray',344:'reverse-string',509:'fibonacci-number',252:'meeting-rooms',253:'meeting-rooms-ii',261:'graph-valid-tree',323:'number-of-connected-components-in-an-undirected-graph',1046:'last-stone-weight'};
+const TOPIC_RESOURCES = {
+  'Arrays':'https://neetcode.io/roadmap','Arrays/Hashing':'https://neetcode.io/roadmap','Strings':'https://leetcode.com/explore/learn/card/leetcodes-interview-crash-course-data-structures-and-algorithms/703/arraystrings/','Strings/Hashing':'https://neetcode.io/roadmap','Strings/Stack':'https://neetcode.io/roadmap','Recursion':'https://www.geeksforgeeks.org/recursion/','Recursion/Math':'https://www.geeksforgeeks.org/recursion/','Math':'https://cp-algorithms.com/algebra/sieve-of-eratosthenes.html','Math/Binary Search':'https://neetcode.io/roadmap','Sorting/Two Pointers':'https://neetcode.io/roadmap','Sorting/Heap':'https://neetcode.io/roadmap','Two Pointers':'https://neetcode.io/roadmap','Sliding Window':'https://neetcode.io/roadmap','Sliding Window/Deque':'https://neetcode.io/roadmap','Linked List':'https://leetcode.com/explore/learn/card/linked-list/','Linked List/Heap':'https://neetcode.io/roadmap','Stack':'https://leetcode.com/explore/learn/card/queue-stack/','Monotonic Stack':'https://www.geeksforgeeks.org/how-to-identify-and-solve-monotonic-stack-problems/','Stack/Queue':'https://leetcode.com/explore/learn/card/queue-stack/','Binary Search':'https://leetcode.com/explore/learn/card/binary-search/','Binary Search on Answer':'https://leetcode.com/discuss/study-guide/3444552/binary-search-on-answer-template-generic-template/','Binary Search (Hard)':'https://neetcode.io/roadmap','Intervals':'https://neetcode.io/roadmap','Backtracking':'https://leetcode.com/explore/learn/card/recursion-ii/','Trees':'https://leetcode.com/explore/learn/card/data-structure-tree/','Trees/BFS':'https://leetcode.com/explore/learn/card/data-structure-tree/','BST':'https://leetcode.com/explore/learn/card/introduction-to-data-structure-binary-search-tree/','Heap':'https://www.geeksforgeeks.org/priority-queue-class-in-java-2/','Heap (Hard)':'https://www.geeksforgeeks.org/priority-queue-class-in-java-2/','Heap/Greedy':'https://neetcode.io/roadmap','Trie':'https://www.geeksforgeeks.org/trie-insert-and-search/','Trie/Backtracking':'https://neetcode.io/roadmap','Hashing':'https://www.geeksforgeeks.org/hashing-data-structure/','Java Fundamentals':'https://docs.oracle.com/javase/8/docs/api/java/util/Collections.html','Graphs/BFS-DFS':'https://leetcode.com/explore/learn/card/graph/','Graphs':'https://leetcode.com/explore/learn/card/graph/','Graphs/Multi-source BFS':'https://leetcode.com/explore/learn/card/graph/','Graphs/Topological Sort':'https://www.geeksforgeeks.org/topological-sorting/','Graphs/Union-Find':'https://www.geeksforgeeks.org/introduction-to-disjoint-set-data-structure-or-union-find-algorithm/','Union-Find':'https://www.geeksforgeeks.org/introduction-to-disjoint-set-data-structure-or-union-find-algorithm/','Graphs/Dijkstra':'https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/','Graphs/Bellman-Ford':'https://www.geeksforgeeks.org/bellman-ford-algorithm-dp-23/','Graphs/Binary Search+Dijkstra':'https://neetcode.io/roadmap','Graphs/BFS':'https://leetcode.com/explore/learn/card/graph/','DP - 1D':'https://leetcode.com/explore/learn/card/dynamic-programming/','DP - Grid':'https://leetcode.com/explore/learn/card/dynamic-programming/','DP - 2D':'https://leetcode.com/explore/learn/card/dynamic-programming/','DP - Knapsack':'https://www.geeksforgeeks.org/0-1-knapsack-problem-dp-10/','DP - Strings':'https://leetcode.com/explore/learn/card/dynamic-programming/','DP - Strings (Hard)':'https://leetcode.com/explore/learn/card/dynamic-programming/','Greedy':'https://www.geeksforgeeks.org/greedy-algorithms/','Greedy/DP':'https://neetcode.io/roadmap','Revision':'https://www.techinterviewhandbook.org/coding-interview-study-plan/','Mock Interview':'https://www.pramp.com/','Company-Specific':'https://leetcode.com/company/','CS Fundamentals':'https://www.geeksforgeeks.org/last-minute-notes-operating-systems/','Final Review':'https://www.techinterviewhandbook.org/algorithms/study-cheatsheet/'
+};
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyC4RPLzWCKn4Y7IMfZPJFcNukKFciSVuKo",
+  authDomain: "dsa-tracker-168db.firebaseapp.com",
+  projectId: "dsa-tracker-168db",
+  storageBucket: "dsa-tracker-168db.firebasestorage.app",
+  messagingSenderId: "676989410815",
+  appId: "1:676989410815:web:8e626e9a6e6f437d1b5bca",
+  measurementId: "G-MF4VLH22BF"
+};
+const FIREBASE_ENABLED = Boolean(FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.projectId);
+const STORAGE_KEY='dsa90_mentor_state_v2', SETTINGS_KEY='dsa90_mentor_settings_v2';
+const REVIEW_INTERVALS=[3,7,21,45];
+let state={}, settings={startDate:null}, selectedDay=null, currentTab='today';
+let firebaseApp=null, firebaseAuth=null, firebaseDb=null, currentUser=null, cloudUnsubscribe=null, cloudSaveTimer=null, applyingCloud=false;
+function todayISO(){return new Date().toISOString().slice(0,10)}
+function addDays(iso,n){const d=new Date(iso+'T00:00:00');d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)}
+function dayNumberFor(iso){if(!settings.startDate)return 1;return Math.round((new Date(iso+'T00:00:00')-new Date(settings.startDate+'T00:00:00'))/86400000)+1}
+function slugify(name){return name.toLowerCase().replace(/\(.*?\)/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+function problemSlug(p){return SLUG_OVERRIDES[p.lc]||slugify(p.name.replace(/revisit.*$/i,'').replace(/recursive/i,''))}
+function difficulty(p){if(!p.lc)return 'Study'; if(HARD.has(p.lc))return 'Hard'; if(EASY.has(p.lc))return 'Easy'; return 'Medium'}
+function lcUrl(p){return p.lc?`https://leetcode.com/problems/${problemSlug(p)}/`:null}
+function studyUrl(p){return TOPIC_RESOURCES[p.topic]||'https://neetcode.io/roadmap'}
+function esc(s){return String(s).replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]))}
+function hintFor(p){
+  if(!p.lc){
+    if(/mock/i.test(p.topic+p.name))return 'Do not aim for perfect answers. Aim to speak your thought process clearly: clarify, propose brute force, optimize, code, test.';
+    if(/java/i.test(p.topic+p.name))return 'Focus on when to choose HashMap, HashSet, ArrayDeque, PriorityQueue, TreeMap, and ArrayList in Java.';
+    if(/fundamentals/i.test(p.topic+p.name))return 'Prepare crisp 60-second explanations for OOP, joins/indexes, process vs thread, deadlock, and normalization.';
+    return 'Redo cold. If you remember only the final code, force yourself to explain the pattern and invariant before typing.';
+  }
+  const specific={
+    1:'Use a HashMap from needed complement to index; do not sort if original indices matter.',
+    121:'Track the minimum price seen so far and ask: what is the best profit if I sell today?',
+    217:'A HashSet should catch the first repeated value immediately.',
+    53:'Kadane: keep the best subarray ending here; drop the prefix when it becomes harmful.',
+    238:'Think prefix product from the left and suffix product from the right; avoid division.',
+    283:'Maintain the position where the next non-zero element should be written.',
+    287:'Treat values as next pointers; Floyd cycle detection works because one value repeats.',
+    88:'Fill from the back so you do not overwrite useful nums1 values.',
+    189:'Reverse whole array, then reverse the two parts after normalizing k.',
+    242:'Count characters; for Java, int[26] is cleaner than sorting for lowercase strings.',
+    125:'Two pointers; skip non-alphanumeric characters before comparing lowercase chars.',
+    14:'Shrink the prefix while each word disagrees with it.',
+    151:'Trim, split around spaces conceptually, then rebuild words in reverse order.',
+    49:'The sorted string or 26-count signature is your HashMap key.',
+    20:'Stack opening brackets; every closing bracket must match the top.',
+    50:'Fast power: square the base and halve the exponent; handle negative n carefully.',
+    69:'Binary search the answer; compare mid <= x / mid to avoid overflow.',
+    204:'Sieve: once a number is prime, mark its multiples starting from i*i.',
+    202:'Repeated digit-square sums either reach 1 or enter a cycle; use a set or slow/fast.',
+    75:'Dutch National Flag: low, mid, high; only advance mid when the current region is settled.',
+    215:'A size-k min heap keeps the k largest values; the root becomes the answer.',
+    167:'Sorted array means two pointers can move based on sum too small or too large.',
+    15:'Sort first. Fix one number, then solve two-sum with left/right and skip duplicates.',
+    11:'Move the shorter wall inward; the taller wall cannot rescue a shorter bottleneck.',
+    42:'Two pointers with leftMax/rightMax; water is bounded by the smaller side.',
+    3:'Sliding window with last seen index; move left past the duplicate.',
+    424:'Window is valid while window length - maxFreq <= k.',
+    76:'Expand until valid, then shrink while preserving all required counts.',
+    239:'Use a deque of indices with decreasing values; remove stale indices from the front.',
+    206:'Keep prev, curr, next. Reverse one link at a time.',
+    21:'Dummy node simplifies merging and avoids head special cases.',
+    143:'Find middle, reverse second half, then weave the two lists.',
+    19:'Advance fast n steps, then move slow/fast together before deleting.',
+    141:'Slow and fast pointers meet only if there is a cycle.',
+    138:'Map old nodes to copied nodes, or interleave copies between originals.',
+    2:'Simulate digit addition with carry; a dummy head keeps the code calm.',
+    23:'Merge using a priority queue keyed by node value.',
+    155:'Store current minimum alongside each pushed value or maintain a second min stack.',
+    150:'Stack numbers; when operator appears, pop right operand second-to-top carefully.',
+    739:'Monotonic decreasing stack of indices waiting for a warmer day.',
+    496:'Precompute next greater using a stack, then answer queries from a map.',
+    503:'Loop twice over indices modulo n to simulate circular array.',
+    232:'Use input stack for pushes and output stack for pops; pour only when output is empty.',
+    225:'Use one queue and rotate after push so the newest item comes first.',
+    84:'Increasing stack of bar indices; when height drops, finalize rectangles.',
+    704:'Classic binary search: maintain inclusive bounds and update without skipping mid.',
+    33:'One half is always sorted; decide if target lies inside that half.',
+    153:'Compare mid with right; the minimum is in the unsorted half.',
+    34:'Run binary search twice: first position >= target and first position > target.',
+    74:'Treat matrix as a flattened sorted array using row = mid / cols.',
+    875:'Binary search eating speed; feasibility is total hours <= h.',
+    4:'Partition both arrays so left side count and max-left <= min-right are valid.',
+    56:'Sort by start; merge when current start <= previous end.',
+    57:'Add intervals before new, merge overlaps, then append the rest.',
+    435:'Sort by end time and greedily keep intervals that finish earliest.',
+    252:'Sort meetings by start; any start before previous end means conflict.',
+    253:'Track ongoing meetings with a min-heap of end times.',
+    78:'Backtracking choice: include current number or skip it.',
+    90:'Sort and skip duplicate choices at the same recursion depth.',
+    46:'Use a used[] array; each level chooses one unused number.',
+    39:'At each index, choose current candidate again or move forward.',
+    40:'Sort, move forward after choosing, and skip same-depth duplicates.',
+    79:'DFS from each cell; mark visited temporarily and restore after exploring.',
+    51:'Track used columns and diagonals; place one queen per row.',
+    131:'Backtrack over cut positions; only continue when the left piece is palindrome.',
+    104:'Depth is 1 + max(left depth, right depth).',
+    100:'Two trees match if roots match and both subtrees match.',
+    226:'Swap left and right recursively.',
+    102:'BFS level by level using queue size to separate levels.',
+    98:'Carry valid min/max bounds down the tree.',
+    235:'In BST, move left/right until p and q split around the current node.',
+    236:'Return node if current is p/q; if left and right both return, current is LCA.',
+    124:'Return best downward path, but update global answer with left + node + right.',
+    543:'Diameter through a node is left height + right height.',
+    297:'Serialize null markers too; otherwise tree shape is lost.',
+    230:'Inorder traversal of BST visits values in sorted order.',
+    105:'Preorder gives root; inorder splits left and right subtree.',
+    110:'Return height, but propagate -1 when a subtree is already imbalanced.',
+    703:'Keep a min-heap of size k for the stream.',
+    1046:'Always smash the two largest stones; a max-heap models this directly.',
+    973:'Compare squared distance; no need for square root.',
+    347:'Frequency map first, then heap or bucket by frequency.',
+    295:'Two heaps: max-heap for lower half, min-heap for upper half; rebalance sizes.',
+    621:'The most frequent task creates idle slots; formula thinking helps.',
+    208:'Trie node has children and end-of-word flag.',
+    211:'Dot wildcard means DFS over all children at that character.',
+    212:'Build trie of words, then DFS grid while pruning dead prefixes.',
+    128:'Only start counting when num-1 is absent; that marks sequence starts.',
+    560:'Prefix sum map: previousSum = currentSum - k tells how many subarrays end here.',
+    706:'Use buckets and handle collisions; design questions reward clean structure.',
+    705:'Boolean buckets or chained buckets; explain collision tradeoffs.',
+    200:'DFS/BFS from each unvisited land cell and sink/mark the island.',
+    133:'Graph clone needs a map from original node to cloned node.',
+    695:'Same as islands, but return area count from each DFS/BFS.',
+    417:'Reverse the thinking: start BFS/DFS from oceans and mark reachable cells.',
+    130:'Mark border-connected O cells first; only enclosed cells should flip.',
+    994:'Multi-source BFS from all rotten oranges; each level is one minute.',
+    207:'Course schedule is cycle detection in a directed graph.',
+    210:'Topological order via indegree queue; append when indegree becomes zero.',
+    261:'A valid tree has n-1 edges and no cycles / exactly one connected component.',
+    323:'Count connected components with DFS/BFS or union-find.',
+    684:'The first edge that connects two already-connected nodes is redundant.',
+    721:'Union accounts sharing emails, then group emails by root account.',
+    743:'Dijkstra from source; answer is the largest shortest distance reached.',
+    787:'Stops limit makes plain Dijkstra tricky; think layered BFS or Bellman-Ford relaxations.',
+    1631:'Binary search effort or Dijkstra where path cost is max edge effort so far.',
+    127:'BFS over word transformations; generic wildcard buckets reduce neighbor search.',
+    70:'Ways to step n equals ways to step n-1 plus n-2.',
+    198:'At each house, choose rob current + two back, or skip current.',
+    213:'Circle breaks into two linear cases: exclude first or exclude last.',
+    300:'Maintain tails array; binary search where current number should replace.',
+    139:'dp[i] means prefix up to i can be segmented.',
+    91:'At each index, decode one digit if valid and two digits if 10..26.',
+    62:'Grid DP: ways from top + left.',
+    64:'Minimum path to cell is grid value plus min(top,left).',
+    1143:'2D DP comparing last characters; match adds 1 from diagonal.',
+    72:'Insert/delete/replace correspond to three neighboring DP states.',
+    322:'dp amount = min coins over all last coin choices.',
+    518:'Loop coins outside and amounts inside to count combinations, not permutations.',
+    416:'Can you reach totalSum/2 using subset-sum DP?',
+    494:'Transform signs into subset sum when possible.',
+    5:'Expand around each center; palindromes mirror outward.',
+    647:'Count every expansion around odd and even centers.',
+    97:'dp[i][j] means s1 prefix i and s2 prefix j form s3 prefix i+j.',
+    115:'When chars match, choose use-it or skip-it from source string.',
+    55:'Track farthest reachable index; if current index passes it, fail.',
+    45:'Greedy BFS layers: when current range ends, jump and extend range.',
+    134:'If tank drops below zero, the start cannot be anywhere in the failed segment.'
+  };
+  if(specific[p.lc])return specific[p.lc];
+  if(/Backtracking/i.test(p.topic))return 'Draw the decision tree: choices, constraints, and when to undo a choice.';
+  if(/Graph/i.test(p.topic))return 'First decide representation and traversal: BFS for shortest layers, DFS for components/cycles.';
+  if(/DP/i.test(p.topic))return 'Define dp state in one sentence before coding; then write the transition from smaller states.';
+  if(/Tree|BST/i.test(p.topic))return 'Ask what information each node should return to its parent.';
+  if(/Heap/i.test(p.topic))return 'Use a heap when you repeatedly need the smallest/largest active candidate.';
+  if(/Sliding Window/i.test(p.topic))return 'Maintain a valid window and move left only when the condition is broken or can be improved.';
+  if(/Binary Search/i.test(p.topic))return 'Binary search needs a monotonic condition: false...false, true...true.';
+  return 'Name the pattern first, then code the invariant. The hint should unlock direction, not replace thinking.';
+}
+function renderLineChart(){
+  const lcRows=PROBLEMS.filter(p=>p.lc), total=lcRows.length, w=720, h=260, pad=34;
+  const byPlan=Array.from({length:91},()=>0), bySolved=Array.from({length:91},()=>0);
+  lcRows.forEach(p=>{byPlan[p.day]++;const st=getState(p.id);if(st.solvedDate){const d=Math.max(1,Math.min(90,dayNumberFor(st.solvedDate)));bySolved[d]++;}});
+  for(let i=1;i<=90;i++){byPlan[i]+=byPlan[i-1];bySolved[i]+=bySolved[i-1];}
+  const x=d=>pad+(d-1)*(w-pad*2)/89, y=v=>h-pad-v*(h-pad*2)/Math.max(total,1);
+  const points=arr=>Array.from({length:90},(_,i)=>`${x(i+1).toFixed(1)},${y(arr[i+1]).toFixed(1)}`).join(' ');
+  const solvedNow=bySolved[90], planToday=byPlan[Math.max(1,Math.min(90,dayNumberFor(todayISO())))];
+  return `<div class="chart-card"><div class="chart-title"><h3>Cumulative LC progress</h3><span>${solvedNow}/${total} solved · today plan ${planToday}</span></div><svg class="chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="Cumulative solved problems compared with planned schedule"><line class="chart-gridline" x1="${pad}" y1="${y(total/2)}" x2="${w-pad}" y2="${y(total/2)}"/><line class="chart-axis" x1="${pad}" y1="${h-pad}" x2="${w-pad}" y2="${h-pad}"/><line class="chart-axis" x1="${pad}" y1="${pad}" x2="${pad}" y2="${h-pad}"/><polyline class="chart-plan" points="${points(byPlan)}"/><polyline class="chart-solved" points="${points(bySolved)}"/><text class="chart-label" x="${pad}" y="${h-10}">Day 1</text><text class="chart-label" x="${w-pad-42}" y="${h-10}">Day 90</text><text class="chart-label" x="${pad+8}" y="${pad+4}">${total}</text><text class="chart-label" x="${w-pad-145}" y="${pad+10}">green = actual · dashed = plan</text></svg></div>`;
+}
+function renderWeeklyBars(){
+  const weeks=Array.from({length:13},(_,i)=>({label:`W${i+1}`,solved:0,planned:0}));
+  PROBLEMS.filter(p=>p.lc).forEach(p=>{weeks[Math.min(12,Math.floor((p.day-1)/7))].planned++;const st=getState(p.id);if(st.solvedDate){weeks[Math.min(12,Math.floor((Math.max(1,dayNumberFor(st.solvedDate))-1)/7))].solved++;}});
+  const max=Math.max(1,...weeks.map(w=>Math.max(w.solved,w.planned)));
+  return `<div class="chart-card"><div class="chart-title"><h3>Weekly velocity</h3><span>solved vs planned load</span></div><svg class="chart" viewBox="0 0 360 260" role="img" aria-label="Weekly solved bar chart">${weeks.map((wk,i)=>{const x=22+i*25, bh=180*wk.solved/max, ph=180*wk.planned/max;return `<rect class="chart-bar-bg" x="${x}" y="${220-ph}" width="14" height="${ph}" rx="4"/><rect class="chart-bar" x="${x}" y="${220-bh}" width="14" height="${bh}" rx="4"/><text class="chart-label" x="${x-2}" y="244">${wk.label}</text>`}).join('')}<text class="chart-label" x="20" y="22">green = solved, pale = planned</text></svg></div>`;
+}
+function getState(id){if(!state[id])state[id]={solved:false,revisited:false,alone:false,notes:'',solvedDate:null,nextReview:null,stage:0};return state[id]}
+function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));localStorage.setItem(SETTINGS_KEY,JSON.stringify(settings));queueCloudSave()}
+function load(){try{state=JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}')}catch(e){state={}};try{settings=JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}')}catch(e){settings={}};if(!settings.startDate)settings.startDate=todayISO();PROBLEMS.forEach(p=>getState(p.id))}
+function setAuthStatus(msg){const el=document.getElementById('authStatus');if(el)el.textContent=msg;const sync=document.getElementById('syncStatus');if(sync)sync.textContent=currentUser?'synced':'local only'}
+function cloudRef(){return firebaseDb&&currentUser?firebaseDb.collection('dsaTrackerUsers').doc(currentUser.uid).collection('trackers').doc('dsa90'):null}
+function queueCloudSave(){if(!currentUser||!firebaseDb||applyingCloud)return;clearTimeout(cloudSaveTimer);cloudSaveTimer=setTimeout(async()=>{try{await cloudRef().set({settings,state,updatedAt:firebase.firestore.FieldValue.serverTimestamp(),version:2},{merge:true});setAuthStatus(`Synced as ${currentUser.email}`)}catch(e){setAuthStatus('Local saved, cloud sync failed. Check Firebase rules/config.')}},650)}
+function mergeCloudData(data){
+  if(!data)return;
+  applyingCloud=true;
+  const cloudState=data.state||{}, merged={...state};
+  PROBLEMS.forEach(p=>{
+    const local=state[p.id]||{}, cloud=cloudState[p.id]||{};
+    merged[p.id]={
+      ...cloud,
+      ...local,
+      solved:Boolean(local.solved||cloud.solved),
+      revisited:Boolean(local.revisited||cloud.revisited),
+      alone:Boolean(local.alone||cloud.alone),
+      notes:local.notes||cloud.notes||'',
+      solvedDate:local.solvedDate||cloud.solvedDate||null,
+      nextReview:local.nextReview||cloud.nextReview||null,
+      stage:Math.max(Number(local.stage||0),Number(cloud.stage||0))
+    };
+  });
+  state=merged;
+  settings={...(data.settings||{}),...settings};
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+  localStorage.setItem(SETTINGS_KEY,JSON.stringify(settings));
+  applyingCloud=false;
+  queueCloudSave();
+  render();
+}
+function initFirebaseSync(){
+  if(!FIREBASE_ENABLED){setAuthStatus('Firebase config is blank. Local-only mode is active.');return}
+  if(!window.firebase){setAuthStatus('Firebase SDK did not load. Local-only mode is active.');return}
+  try{
+    firebaseApp=firebase.apps.length?firebase.app():firebase.initializeApp(FIREBASE_CONFIG);
+    firebaseAuth=firebase.auth();
+    firebaseDb=firebase.firestore();
+    firebaseAuth.onAuthStateChanged(async user=>{
+      currentUser=user||null;
+      if(cloudUnsubscribe){cloudUnsubscribe();cloudUnsubscribe=null}
+      if(!currentUser){setAuthStatus('Signed out. Local-only mode.');renderKpis();return}
+      setAuthStatus(`Signed in as ${currentUser.email}. Loading cloud progress...`);
+      const ref=cloudRef();
+      const snap=await ref.get();
+      if(!snap.exists){await ref.set({settings,state,createdAt:firebase.firestore.FieldValue.serverTimestamp(),updatedAt:firebase.firestore.FieldValue.serverTimestamp(),version:2},{merge:true})}
+      else mergeCloudData(snap.data());
+      cloudUnsubscribe=ref.onSnapshot(doc=>{if(doc.exists&&!applyingCloud)mergeCloudData(doc.data())});
+      setAuthStatus(`Synced as ${currentUser.email}`);
+    });
+  }catch(e){setAuthStatus('Firebase initialization failed. Check your config object.')}
+}
+function markSolved(id,val){const st=getState(id);st.solved=val;st.alone=val?st.alone:false;if(val&&!st.solvedDate){st.solvedDate=todayISO();st.stage=0;st.nextReview=addDays(todayISO(),REVIEW_INTERVALS[0])}if(!val){st.solvedDate=null;st.revisited=false;st.nextReview=null;st.stage=0}save();render()}
+function markRevisited(id){const st=getState(id);st.revisited=true;st.stage=Math.min((st.stage||0)+1,REVIEW_INTERVALS.length);st.nextReview=st.stage<REVIEW_INTERVALS.length?addDays(todayISO(),REVIEW_INTERVALS[st.stage]):null;save();render()}
+function setAlone(id,val){getState(id).alone=val;save();renderKpis();}
+function setNotes(id,val){getState(id).notes=val;save()}
+function isRevision(p){return !p.lc||/revision|mock|study|fundamentals|review|company/i.test(p.topic+' '+p.name)}
+function itemCard(p){const st=getState(p.id), diff=difficulty(p), premium=PREMIUM.has(p.lc), solved=st.solved, due=st.nextReview&&st.nextReview<=todayISO();const cls=['item', solved?'solved':'', due?'revisit':'', diff==='Hard'?'problem-hard':'', !p.lc?'study':''].join(' ');return `<article class="${cls}"><div class="item-top"><div><div class="title-line"><span class="item-name">Day ${p.day}: ${p.name}</span>${due?'<span class="badge medium">revisit due</span>':''}</div><div class="badges"><span class="badge">${p.lc?'LC '+p.lc:'No new LC'}</span><span class="badge ${diff.toLowerCase()}">${diff}</span><span class="badge">${p.topic}</span>${premium?'<span class="badge premium">premium / locked caution</span>':''}${[53,75,23].includes(p.lc)?'<span class="badge">intentional repeat</span>':''}</div></div><div class="small mono">${st.solvedDate?('solved '+st.solvedDate):'not logged'}</div></div><details class="hint"><summary>Short hint — use only after 10 honest minutes</summary><p>${esc(hintFor(p))}</p></details><div class="actions">${p.lc?`<a class="btn primary" href="${lcUrl(p)}" target="_blank" rel="noopener">LeetCode</a>`:''}<a class="btn" href="${studyUrl(p)}" target="_blank" rel="noopener">Study material</a><button class="btn ${solved?'done':''}" onclick="markSolved('${p.id}',${!solved})">${solved?'Solved ✓':'Mark solved'}</button><button class="btn" onclick="markRevisited('${p.id}')">Cold revisit</button><label class="btn"><input type="checkbox" ${st.alone?'checked':''} onchange="setAlone('${p.id}',this.checked)"> solved alone</label></div><textarea class="note" placeholder="One-line Java pattern / mistake / edge case to remember..." oninput="setNotes('${p.id}',this.value)">${esc(st.notes||'')}</textarea></article>`}
+function renderList(el, list, empty='Nothing here yet.'){el.innerHTML=list.length?list.map(itemCard).join(''):`<div class="empty">${empty}</div>`}
+function renderToday(){const day=Math.max(1,Math.min(90,selectedDay||dayNumberFor(todayISO())));const todays=PROBLEMS.filter(p=>p.day===day);const overdue=PROBLEMS.filter(p=>getState(p.id).nextReview&&getState(p.id).nextReview<=todayISO()&&!todays.includes(p));document.getElementById('view-today').innerHTML=`<div class="panel"><div class="panel-head"><div><h2>Day ${day} queue</h2><div class="small">Do not speedrun. For each new problem: 10–15 min thinking, then hint if stuck, then code, then dry-run, then write one note.</div></div><div class="actions"><button class="btn" onclick="selectedDay=Math.max(1,${day}-1);render()">← Prev</button><button class="btn" onclick="selectedDay=Math.min(90,${day}+1);render()">Next →</button></div></div><div id="todayList"></div></div>${overdue.length?`<div class="panel"><div class="panel-head"><div><h2>Revision due</h2><div class="small">These are the rows your future self asked you to revisit. They beat new problems for interview retention.</div></div><div class="small mono">${overdue.length} due</div></div><div id="dueList"></div></div>`:''}`;renderList(document.getElementById('todayList'),todays);if(overdue.length)renderList(document.getElementById('dueList'),overdue)}
+function renderAll(){const q=document.getElementById('searchInput')?.value?.toLowerCase()||'', topic=document.getElementById('topicFilter')?.value||'all', diff=document.getElementById('difficultyFilter')?.value||'all', type=document.getElementById('typeFilter')?.value||'all';let list=PROBLEMS.filter(p=>{const hay=`${p.day} ${p.lc} ${p.name} ${p.topic}`.toLowerCase();if(q&&!hay.includes(q))return false;if(topic!=='all'&&p.topic!==topic)return false;if(diff!=='all'&&difficulty(p)!==diff)return false;if(type==='leetcode'&&!p.lc)return false;if(type==='revision'&&p.lc)return false;if(type==='premium'&&!PREMIUM.has(p.lc))return false;return true});document.getElementById('allCount').textContent=`${list.length} shown`;renderList(document.getElementById('allList'),list)}
+function renderTrail(){const trail=document.getElementById('trail');const todayDay=dayNumberFor(todayISO());trail.innerHTML='';for(let d=1;d<=90;d++){const rows=PROBLEMS.filter(p=>p.day===d), solved=rows.filter(p=>getState(p.id).solved).length;const mostlyRevision=rows.length&&rows.every(isRevision);const div=document.createElement('button');div.className='day-dot '+(mostlyRevision?'revision ': solved===0?'':solved===rows.length?'full':'partial')+(d===todayDay?' today':'')+(d===(selectedDay||todayDay)?' selected':'');div.title=`Day ${d}: ${solved}/${rows.length} logged`;div.onclick=()=>{selectedDay=d;currentTab='today';document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab==='today'));document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-today'));render()};trail.appendChild(div)}const solved=PROBLEMS.filter(p=>getState(p.id).solved).length;document.getElementById('trailStat').textContent=`${solved}/${PROBLEMS.length} rows logged`}
+function renderKpis(){const solved=PROBLEMS.filter(p=>getState(p.id).solved).length, alone=PROBLEMS.filter(p=>getState(p.id).alone).length, revisited=PROBLEMS.filter(p=>getState(p.id).revisited).length;document.getElementById('kpiSolved').textContent=alone;document.getElementById('kpiRevisited').textContent=revisited;document.getElementById('kpiLc').textContent=PROBLEMS.filter(p=>p.lc).length;document.getElementById('verdictLc').textContent=PROBLEMS.filter(p=>p.lc).length;document.getElementById('verdictUnique').textContent=new Set(PROBLEMS.filter(p=>p.lc).map(p=>p.lc)).size;document.getElementById('dayOfJourney').textContent=`Today is plan day ${Math.max(1,dayNumberFor(todayISO()))}`}
+function renderProgress(){const byTopic={};PROBLEMS.forEach(p=>{if(!byTopic[p.topic])byTopic[p.topic]={total:0,solved:0};byTopic[p.topic].total++;if(getState(p.id).solved)byTopic[p.topic].solved++});const rows=Object.entries(byTopic).sort((a,b)=>b[1].total-a[1].total).map(([name,v])=>`<div class="topic-row"><div>${name}</div><div class="track"><div class="fill" style="width:${Math.round(v.solved/v.total*100)}%"></div></div><div class="mono">${v.solved}/${v.total}</div></div>`).join('');document.getElementById('view-progress').innerHTML=`<div class="panel"><div class="panel-head"><div><h2>Progress trends</h2><div class="small">Use the curve to catch drift early. If green falls far below dashed for more than a week, reduce new problems and do revision first.</div></div></div><div class="chart-grid">${renderLineChart()}${renderWeeklyBars()}</div><div class="progress-list">${rows}</div></div>`}
+function renderAudit(){document.getElementById('view-audit').innerHTML=`<div class="panel"><div class="panel-head"><div><h2>Deep mentor audit</h2><div class="small">This is the honest assessment of the plan for October internship/PPO rounds.</div></div></div><div class="audit-grid"><div class="audit-card good"><h3>Is it sufficient?</h3><p>Yes. 133 LeetCode rows, 130 unique problems, and planned revision days are enough for campus interviews if you can explain patterns and code clean Java without editorial dependency.</p></div><div class="audit-card watch"><h3>What to watch</h3><p>Four rows are commonly premium/locked on LeetCode: 252, 253, 261, 323. Keep them as concepts, but if blocked, substitute free equivalents from NeetCode/Grind 75.</p></div><div class="audit-card watch"><h3>Intentional repeats</h3><p>LC 53, 75, and 23 appear twice. That is okay because the second appearance changes the lens: Kadane/greedy, two-pointer, heap revisit. I marked them clearly.</p></div><div class="audit-card risk"><h3>Main weakness</h3><p>Bit manipulation and LRU/cache design are light. If you finish early, add Single Number, Number of 1 Bits, Counting Bits, Sum of Two Integers, and LRU Cache.</p></div></div></div><div class="panel"><div class="panel-head"><div><h2>90-day phase strategy</h2><div class="small">Your brain should feel the plan getting harder, not randomly heavier.</div></div></div><div class="phase-grid"><div class="phase"><h3>Days 1–14 · Warm start</h3><p>Arrays, strings, hashing, recursion basics. Build confidence and Java muscle memory.</p></div><div class="phase"><h3>Days 15–35 · Interview patterns</h3><p>Two pointers, sliding window, linked list, stack, binary search, intervals. This is the campus-interview core.</p></div><div class="phase"><h3>Days 36–56 · Recursion structures</h3><p>Backtracking, trees, heaps, tries, hashing. Speak out loud while solving; these expose reasoning gaps quickly.</p></div><div class="phase"><h3>Days 57–70 · Graphs</h3><p>BFS/DFS, topo sort, union-find, shortest path. Draw first, code second.</p></div><div class="phase"><h3>Days 71–84 · DP + greedy</h3><p>Learn state definition and transition. DP is not magic; it is naming the repeated decision.</p></div><div class="phase"><h3>Days 85–90 · Interview mode</h3><p>No heavy new learning. Revisit misses, do mocks, revise Java/OOP/DBMS/OS, sleep properly.</p></div></div></div>`}
+function renderResources(){document.getElementById('view-resources').innerHTML=`<div class="panel"><div class="panel-head"><div><h2>Study resources embedded</h2><div class="small">Use one main roadmap and a few references. Too many tabs are just anxiety wearing a fake moustache.</div></div></div><div class="resource-grid"><a class="resource-card" href="https://neetcode.io/practice/practice/neetcode150" target="_blank"><h3>NeetCode 150</h3><p>Best broad benchmark for pattern coverage; your list is close in size and spirit.</p></a><a class="resource-card" href="https://www.techinterviewhandbook.org/grind75/" target="_blank"><h3>Grind 75</h3><p>Useful if you need a tighter minimum list or want to customize by time and difficulty.</p></a><a class="resource-card" href="https://leetcode.com/explore/interview/card/leetcodes-interview-crash-course-data-structures-and-algorithms/" target="_blank"><h3>LeetCode Crash Course</h3><p>Good structured explanations for common DS&A patterns.</p></a><a class="resource-card" href="https://takeuforward.org/strivers-a2z-dsa-course/strivers-a2z-dsa-course-sheet-2/" target="_blank"><h3>Striver A2Z</h3><p>Useful for India-campus style preparation and fundamentals-first sequencing.</p></a><a class="resource-card" href="https://docs.oracle.com/javase/8/docs/api/java/util/package-summary.html" target="_blank"><h3>Java Collections</h3><p>Know ArrayList, HashMap, HashSet, PriorityQueue, ArrayDeque, TreeMap enough to choose correctly.</p></a><a class="resource-card" href="https://www.pramp.com/" target="_blank"><h3>Mock interviews</h3><p>Practice explaining, clarifying, and debugging under mild pressure before October.</p></a></div><div class="deploy-note"><strong>Deployment note:</strong> this is a static site, so GitHub Pages, Netlify, or Vercel will work well. Progress is stored in your current browser only; use Export progress weekly, or add Supabase/Firebase later if you want phone/laptop sync.</div></div><div class="panel"><h2>Daily method</h2><ol><li>Read the problem and restate it in plain English.</li><li>Write brute force first in 2–3 lines of thought.</li><li>Name the pattern: hashmap, two pointers, BFS, DP state, etc.</li><li>Code in Java with small helper methods only when they clarify.</li><li>Dry-run one normal case and one edge case.</li><li>Use the short hint only after 10 honest minutes, not immediately.</li><li>Write one note: the mistake you would repeat.</li><li>Revisit cold after 3, 7, 21, and 45 days.</li></ol></div>`}
+function setupFilters(){const topics=['all',...Array.from(new Set(PROBLEMS.map(p=>p.topic))).sort()];const sel=document.getElementById('topicFilter');if(sel&&!sel.dataset.ready){sel.innerHTML=topics.map(t=>`<option value="${t}">${t==='all'?'All topics':t}</option>`).join('');['searchInput','topicFilter','difficultyFilter','typeFilter'].forEach(id=>document.getElementById(id)?.addEventListener('input',renderAll));sel.dataset.ready='1'}}
+function render(){document.getElementById('startDateInput').value=settings.startDate;renderKpis();renderTrail();setupFilters();renderToday();renderAll();renderProgress();renderAudit();renderResources()}
+document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{currentTab=btn.dataset.tab;document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t===btn));document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+currentTab));render()}));
+document.getElementById('startDateInput').addEventListener('change',e=>{settings.startDate=e.target.value||todayISO();selectedDay=null;save();render()});
+document.getElementById('exportBtn').addEventListener('click',()=>{const blob=new Blob([JSON.stringify({settings,state,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='dsa-90-day-progress.json';a.click();URL.revokeObjectURL(a.href)});
+document.getElementById('importBtn').addEventListener('click',()=>document.getElementById('importFile').click());
+document.getElementById('importFile').addEventListener('change',async e=>{const file=e.target.files&&e.target.files[0];if(!file)return;try{const data=JSON.parse(await file.text());if(!data||typeof data!=='object'||!data.state)throw new Error('Invalid progress file');state=data.state||{};settings=data.settings||settings;PROBLEMS.forEach(p=>getState(p.id));save();render();alert('Progress imported. Tiny victory trumpet.');}catch(err){alert('Could not import this file. Use the JSON exported from this tracker.')}finally{e.target.value=''}});
+document.getElementById('resetBtn').addEventListener('click',()=>{if(confirm('Reset all local progress for this tracker?')){state={};PROBLEMS.forEach(p=>getState(p.id));save();render()}});
+document.getElementById('signInBtn').addEventListener('click',async()=>{if(!firebaseAuth){setAuthStatus('Add Firebase config first, then deploy/reload.');return}const email=document.getElementById('authEmail').value.trim(), password=document.getElementById('authPassword').value;if(!email||!password){setAuthStatus('Enter email and password.');return}try{await firebaseAuth.signInWithEmailAndPassword(email,password)}catch(e){setAuthStatus(e.message||'Sign in failed.')}});
+document.getElementById('signUpBtn').addEventListener('click',async()=>{if(!firebaseAuth){setAuthStatus('Add Firebase config first, then deploy/reload.');return}const email=document.getElementById('authEmail').value.trim(), password=document.getElementById('authPassword').value;if(!email||password.length<6){setAuthStatus('Use an email and a password of at least 6 characters.');return}try{await firebaseAuth.createUserWithEmailAndPassword(email,password)}catch(e){setAuthStatus(e.message||'Account creation failed.')}});
+document.getElementById('signOutBtn').addEventListener('click',async()=>{if(firebaseAuth)await firebaseAuth.signOut()});
+load();render();initFirebaseSync();
+</script>
+</body>
+</html>
