@@ -8,8 +8,9 @@ Open `index.html` directly in a browser, or serve the folder with any static ser
 
 ## Firebase setup
 
-1. In Firebase Console, enable Authentication → Email/Password.
-2. Create a Firestore database.
+1. In Firebase Console, enable Authentication → Google and Email/Password.
+2. In Authentication → Settings → Authorized domains, add your deployed domain.
+3. Create a Firestore database.
 3. Use the rules in `firestore.rules`.
 4. Deploy as a static site through GitHub Pages, Netlify, Vercel, or Firebase Hosting.
 
