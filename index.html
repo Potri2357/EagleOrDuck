@@ -319,7 +319,7 @@ function mergeCloudData(data){
     };
   });
   state=merged;
-  settings={...(data.settings||{}),...settings};
+  settings={...settings,...(data.settings||{})};
   localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
   localStorage.setItem(SETTINGS_KEY,JSON.stringify(settings));
   applyingCloud=false;
