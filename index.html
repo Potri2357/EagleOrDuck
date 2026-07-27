@@ -1981,6 +1981,9 @@ Your teaching philosophy:
 }
 
 function formatNakshiText(text) {
+  if (typeof text === 'string' && (text.trim().startsWith('<div') || text.trim().startsWith('<p>') || text.trim().startsWith('<span'))) {
+    return text; // Pre-formatted HTML (like starter chips) — render directly
+  }
   let formatted = esc(text);
   // Format inline code `code`
   formatted = formatted.replace(/`([^`]+)`/g, '<code>$1</code>');
@@ -2087,8 +2090,8 @@ function openNakshiModal(prefillText, contextLabel) {
   const msgs = document.getElementById('nakshiMessages');
   if (msgs.children.length === 0) {
     const greeting = nakshiGreeting();
-    msgs.innerHTML = nakshiBotRow(greeting);
-    nakshiHistory = [{ role: 'model', parts: [{ text: greeting }] }];
+    msgs.innerHTML = nakshiBotRow(greeting, 'greeting-bot', true);
+    nakshiHistory = [{ role: 'model', parts: [{ text: "Hey! I'm Nakshi, your personal DSA mentor." }] }];
   }
   // Pre-fill context from problem card
   if (contextLabel) {
@@ -2124,8 +2127,8 @@ function clearNakshiChat() {
   if (pill) pill.style.display = 'none';
   nakshiHistory = [];
   const greeting = nakshiGreeting();
-  msgs.innerHTML = nakshiBotRow(greeting);
-  nakshiHistory = [{ role: 'model', parts: [{ text: greeting }] }];
+  msgs.innerHTML = nakshiBotRow(greeting, 'greeting-bot', true);
+  nakshiHistory = [{ role: 'model', parts: [{ text: "Hey! I'm Nakshi, your personal DSA mentor." }] }];
   scrollNakshi();
 }
 
