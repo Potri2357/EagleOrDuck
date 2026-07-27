@@ -1181,7 +1181,7 @@ body.auth-loading .login-screen { display: grid; }
       <h1>90-Day DSA Placement Sprint</h1>
       <p class="sub">Solve today’s problems, capture key invariants, and master pattern retention with cold flashcard revisits.</p>
       <div class="mentor-note">
-        <strong>Sprint Plan:</strong> <span id="verdictLc">133</span> LeetCode tasks across <span id="verdictUnique">130</span> unique problem patterns (153 total rows). Volume is sufficient — consistency and cold retention win the interview.
+        <strong>Sprint Overview:</strong> <span id="verdictLc">133</span> LeetCode tasks across <span id="verdictUnique">130</span> unique problem patterns (153 total rows). Volume is sufficient — consistency and cold retention win the interview.
       </div>
     </div>
 
@@ -1189,7 +1189,7 @@ body.auth-loading .login-screen { display: grid; }
       <div>
         <div class="eyebrow">Sprint Velocity</div>
         <h2>Today First</h2>
-        <div class="small" id="dayOfJourney">Today is plan day 1</div>
+        <div class="small" id="dayOfJourney">Today is Day 1</div>
       </div>
       <div class="kpi-grid">
         <div class="kpi"><div class="num" id="kpiSolved">0</div><div class="lbl">Solved Alone</div></div>
@@ -1623,7 +1623,6 @@ function itemCard(p) {
     </details>
     <div class="actions">
       ${p.lc ? `<a class="btn primary sm" href="${lcUrl(p)}" target="_blank" rel="noopener">${SVG.externalLink} LeetCode</a>` : ''}
-      <a class="btn sm" href="${studyUrl(p)}" target="_blank" rel="noopener">${SVG.bookOpen} Study</a>
       <button class="btn sm ${solved ? 'done' : ''}" onclick="markSolved('${p.id}',${!solved})">
         ${solved ? SVG.checkCircle : SVG.circle} ${solved ? 'Solved' : 'Mark Solved'}
       </button>
@@ -1793,9 +1792,15 @@ function renderAnkiView() {
             <span class="badge">${p.topic}</span>
             <span class="badge">${p.lc ? 'LC ' + p.lc : 'Concept'}</span>
           </div>
-          <div class="anki-prompt" style="font-size:18px;">${p.name} — Solution Notes</div>
-          <div style="margin-top:10px; font-size:13.5px; color:var(--ink); line-height:1.5;">
-            <strong>Your Note:</strong> ${esc(st.notes || 'No note written yet.')}
+          <div class="anki-prompt" style="font-size:18px;">${p.name} — Solution & Pattern Logic</div>
+
+          <div style="margin-top:14px; padding:12px 14px; background:#f7f4ed; border:1px solid rgba(203,178,106,0.35); border-radius:14px; font-size:13.5px; color:#5c471b; line-height:1.55;">
+            <strong style="color:var(--gold-dark); display:block; margin-bottom:4px;">🧠 Core Pattern & Logic:</strong>
+            ${getProblemLogic(p)}
+          </div>
+
+          <div style="margin-top:12px; font-size:13.5px; color:var(--ink); line-height:1.5;">
+            <strong>📝 Your Personal Note:</strong> ${esc(st.notes || 'No note written yet.')}
           </div>
         </div>
 
@@ -1851,7 +1856,7 @@ function renderKpis() {
   setText('kpiDays', 90);
   setText('verdictLc', lcProblems.length);
   setText('verdictUnique', new Set(lcProblems.map(p => p.lc)).size);
-  setText('dayOfJourney', `Today is plan day ${Math.max(1, Math.min(90, dayNumberFor(todayISO())))} of 90`);
+  setText('dayOfJourney', `Today is Day ${Math.max(1, Math.min(90, dayNumberFor(todayISO())))} of 90`);
 }
 
 function renderProgress() {
@@ -1963,21 +1968,77 @@ function getNakshiUserName() {
 
 function getNakshiSystemPrompt() {
   const name = getNakshiUserName();
-  return `You are Nakshi, ${name}'s personal DSA mentor and tutor. You are warm, encouraging, deeply empathetic, and highly skilled at the Socratic teaching method.
+  return `You are Nakshi, ${name}'s personal DSA mentor and tutor. You are warm, encouraging, deeply empathetic, and highly clear.
 
-Your teaching philosophy:
-- You NEVER give away answers directly. You guide the student to the answer through questions.
-- You adapt to ${name}'s current understanding. Start by checking what they already know.
-- Respond in SHORT conversational messages (2-4 sentences max per turn) — never write walls of text.
-- Always end your response with exactly ONE focused follow-up question to keep the dialogue going.
-- When ${name} is confused, validate their confusion first before probing ("That's a really common place to get stuck!").
-- Celebrate breakthroughs genuinely ("Yes! You nailed it!").
-- If ${name} says they don't know something, don't give the answer — ask a simpler version of the same question to build up.
-- Use simple analogies and real-world examples to make abstract concepts concrete.
-- Teach at ${name}'s pace — if they seem frustrated, slow down and simplify.
-- Avoid jargon without explaining it first.
-- Never say "engineer" — always use ${name}'s name or "you" instead.
-- Keep a friendly, mentor-like tone throughout, like a brilliant older friend who genuinely wants ${name} to succeed.`;
+Your teaching rules:
+1. IF ${name} EXPLICITLY ASKS FOR THE ANSWER, CODE, OR AN EXPLANATION (e.g., "explain how this works", "give me the answer", "tell me the solution", "explain two sum", "code this"):
+   - Immediately provide a complete, clear, step-by-step explanation with clean code logic and time/space complexity analysis directly!
+   - Do NOT hold back or refuse to give the answer. Do NOT force unnecessary follow-up questions when they just want an explanation.
+
+2. IF ${name} IS ASKING FOR A HINT, GUIDANCE, OR TRYING TO SOLVE TOGETHER:
+   - Use the Socratic method: guide them with 1 focused question or hint to build up their intuition.
+
+3. General rules:
+   - Adapt to ${name}'s understanding. Use simple analogies when concepts are abstract.
+   - Validate confusion first ("That's a really common place to get stuck!").
+   - Celebrate breakthroughs genuinely.
+   - Never say "engineer" or use rigid templates — address ${name} naturally.
+   - Keep a friendly, expert mentor tone throughout.`;
+}
+
+function getProblemLogic(p) {
+  const topic = (p.topic || '').toLowerCase();
+  const name = (p.name || '').toLowerCase();
+
+  if (name.includes('two sum') || name.includes('contains duplicate') || name.includes('anagram') || topic.includes('hashing')) {
+    return "Use a Hash Map/Set for O(1) average lookup time to check for complement target values or character frequency counts.";
+  }
+  if (name.includes('buy and sell stock') || name.includes('kadane') || name.includes('maximum subarray')) {
+    return "Maintain a running state (min price or max current sum). If current sum becomes negative, reset to 0 (Kadane's algorithm).";
+  }
+  if (topic.includes('two pointers') || name.includes('3sum') || name.includes('container with most water') || name.includes('trapping rain')) {
+    return "Use left and right pointers moving inward based on optimal greedy decisions (e.g. shrinking boundaries or comparing pointer values).";
+  }
+  if (topic.includes('sliding window')) {
+    return "Expand right pointer to include elements until constraint is met, then contract left pointer to find optimal subsegment.";
+  }
+  if (topic.includes('linked list')) {
+    return "Use Fast & Slow pointers for cycle detection or middle finding; manipulate next pointers iteratively using prev, curr, next.";
+  }
+  if (topic.includes('monotonic stack') || topic.includes('stack')) {
+    return "Push indices to maintain a monotonic increasing/decreasing stack to find Next Greater/Smaller element in O(N).";
+  }
+  if (topic.includes('binary search')) {
+    return "Halve search space iteratively by comparing mid value against target or verifying monotonic feasibility condition.";
+  }
+  if (topic.includes('intervals')) {
+    return "Sort intervals by start time. Merge overlapping intervals if next.start <= curr.end or select non-overlapping greedy end times.";
+  }
+  if (topic.includes('backtracking')) {
+    return "Recursively make a choice, traverse deeper, and undo (backtrack) state choice to explore all valid permutations/subsets.";
+  }
+  if (topic.includes('bst') || topic.includes('tree')) {
+    return "Use recursive DFS (Inorder gives sorted values in BST) or queue-based BFS level-order traversal. Path sum uses child returns.";
+  }
+  if (topic.includes('heap')) {
+    return "Use a Min-Heap or Max-Heap of size K to continuously maintain top K minimum/maximum elements in O(N log K).";
+  }
+  if (topic.includes('trie')) {
+    return "Store words in a Tree of character nodes where each node contains children map & end-of-word flag for O(L) prefix search.";
+  }
+  if (topic.includes('dijkstra') || topic.includes('graph')) {
+    return "Model vertices and edges. Use BFS for unweighted shortest paths, DFS for component exploration, and Dijkstra with Min-Heap for weighted graphs.";
+  }
+  if (topic.includes('union-find')) {
+    return "Disjoint Set Union (DSU) with path compression and rank tracking to unify connected components in amortized O(α(N)).";
+  }
+  if (topic.includes('dp') || topic.includes('dynamic programming')) {
+    return "Break down problem into overlapping subproblems. Formulate state transition equation dp[i] = optimal(subproblems).";
+  }
+  if (topic.includes('greedy')) {
+    return "Select locally optimal choices at each step that guarantee a global optimum without needing recursive backtracking.";
+  }
+  return "Identify invariant subproblems, optimize lookup via appropriate data structures (Hash/Heap), and analyze time/space bounds.";
 }
 
 function formatNakshiText(text) {
