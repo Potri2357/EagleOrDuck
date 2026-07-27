@@ -2308,21 +2308,41 @@ async function callNakshiAiPipeline(history, systemPrompt) {
     } catch(e) { console.warn('Sarvam API error:', e); }
   }
 
-  // 4. Dynamic Socratic Offline Engine (Contextual fallback if no network/key)
+  // 4. Dynamic Adaptive Offline Engine (Varies dynamically on every turn)
+  return generateAdaptiveFallbackResponse(history);
+}
+
+function generateAdaptiveFallbackResponse(history) {
   const name = getNakshiUserName();
-  const lastUserMsg = [...history].reverse().find(m => m.role === 'user')?.parts[0]?.text.toLowerCase() || '';
+  const userMsgs = history.filter(m => m.role === 'user').map(m => (m.parts?.[0]?.text || '').trim());
+  const lastMsg = userMsgs[userMsgs.length - 1] || '';
+  const lower = lastMsg.toLowerCase();
+  const turnCount = userMsgs.length;
 
-  if (lastUserMsg.includes('no idea') || lastUserMsg.includes('where to start') || lastUserMsg.includes('how to prepare')) {
-    return `I hear you loud and clear, ${name}! Starting DSA can feel intimidating, but we break it down step-by-step.\n\nFirst, pick one language you feel comfortable with (like Python, Java, or C++), and start with basic Arrays & Strings. Are you already comfortable with basic loops and functions?`;
-  }
-  if (lastUserMsg.includes('cannot understand') || lastUserMsg.includes('don\'t understand') || lastUserMsg.includes('confused')) {
-    return `That's completely fine, ${name}! Let's slow down even further. Which part feels unclear — the problem goal itself, or how we trace the inputs?`;
-  }
-  if (lastUserMsg.includes('array') || lastUserMsg.includes('two sum')) {
-    return `Arrays are foundational, ${name}! When you look at an array problem, the key question is: can we solve it with two pointers, or do we need a Hash Map for fast lookup? Which one have you tried?`;
+  if (lower.includes('explain') || lower.includes('answer') || lower.includes('solution') || lower.includes('code')) {
+    return `Here is a clear breakdown for you, ${name}:\n\n1. **Core Concept**: Identify the optimal data structure (e.g. Hash Map for O(1) lookups or Two Pointers to eliminate nested loops).\n2. **Strategy**: Trace the inputs with a small example.\n3. **Complexity**: Aim for O(N) time and O(1) or O(N) space.\n\nLet me know if you would like to walk through a specific code snippet together!`;
   }
 
-  return `I completely hear you, ${name}! Let me help you break that down. Could you tell me in your own words what you think the input gives us and what output we are expecting?`;
+  if (lower.includes('no idea') || lower.includes('where to start') || lower.includes('scratch') || lower.includes('prepare')) {
+    return `Starting DSA can feel overwhelming, ${name}, but you don't need to learn everything at once!\n\nBegin with Arrays & Strings, mastering Two Pointers and Sliding Window first. Which programming language are you using for your practice?`;
+  }
+
+  if (lower.includes('cannot understand') || lower.includes('don\'t understand') || lower.includes('confused') || lower.includes('question')) {
+    return `That's completely fine, ${name}! Let me simplify it.\n\nWhat is the very first line of the problem statement or input example that feels tricky? Let's take it one small piece at a time.`;
+  }
+
+  if (lower.includes('array') || lower.includes('two sum') || lower.includes('hash')) {
+    return `Arrays are foundational, ${name}! When you look at an array problem, the key question is: can we solve it with two pointers, or do we need a Hash Map for fast lookup? Which one have you considered?`;
+  }
+
+  const dynamicFallbacks = [
+    `I hear you, ${name}! What is the first pattern or data structure that comes to mind when you look at this problem?`,
+    `Great point, ${name}. Have you tried drawing out a small input example step-by-step?`,
+    `Let's analyze this together, ${name}. What is the brute force approach here, and how can we optimize it?`,
+    `Spot on, ${name}! How would you trace this if the array was already sorted?`
+  ];
+
+  return dynamicFallbacks[turnCount % dynamicFallbacks.length];
 }
 
 function askAiAboutProblem(idOrName, topic) {
