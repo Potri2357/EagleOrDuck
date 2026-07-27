@@ -1,0 +1,5 @@
+{
+  "buildCommand": "node sync-env.js",
+  "outputDirectory": ".",
+  "installCommand": "npm install"
+}
