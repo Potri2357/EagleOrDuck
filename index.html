@@ -1117,6 +1117,12 @@ body.auth-loading .login-screen { display: grid; }
 }
 </style>
 <script src="config.js"></script>
+<!-- ENV:START -->
+<script>
+window.ENV_KEYS = window.ENV_KEYS || {"groq":"","gemini":"","sarvam":""};
+window.ENV_FIREBASE = window.ENV_FIREBASE || {};
+</script>
+<!-- ENV:END -->
 </head>
 <body class="auth-loading">
 
