@@ -1,5 +1,47 @@
+# ── Sensitive Environment Files ─────────────────────────────────
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ── Dependencies ───────────────────────────────────────────────
 node_modules/
-.DS_Store
+/node_modules
+
+# ── Logs & Debugging ───────────────────────────────────────────
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 firebase-debug.log
+firestore-debug.log
+ui-debug.log
+
+# ── Firebase ───────────────────────────────────────────────────
 .firebase/
+
+# ── Operating System Files ─────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ── IDEs and Code Editors ──────────────────────────────────────
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.swo
+
+# ── Build & Production Outputs ─────────────────────────────────
+dist/
+build/
+out/
+.next/
