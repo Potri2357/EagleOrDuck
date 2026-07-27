@@ -1008,6 +1008,7 @@ body.auth-loading .login-screen { display: grid; }
   .nakshi-modal { border-radius: 20px; }
 }
 </style>
+<script src="config.js"></script>
 </head>
 <body class="auth-loading">
 
@@ -1828,6 +1829,9 @@ const DEPLOYMENT_KEYS = {
 };
 
 function getActiveKey(provider) {
+  if (window.ENV_KEYS && window.ENV_KEYS[provider] && window.ENV_KEYS[provider].trim()) {
+    return window.ENV_KEYS[provider].trim();
+  }
   const localKey = localStorage.getItem(`${provider}_api_key`);
   if (localKey && localKey.trim()) return localKey.trim();
   return (DEPLOYMENT_KEYS[provider] && DEPLOYMENT_KEYS[provider].trim()) || null;
@@ -2007,7 +2011,23 @@ async function sendNakshiMessage() {
 }
 
 async function callNakshiAiPipeline(history, systemPrompt) {
-  // 1. Try Gemini (native multi-turn)
+  // 1. Try Groq (Llama 3.3 70B — fast, ultra-smart conversational tutor)
+  const groqKey = getActiveKey('groq');
+  if (groqKey) {
+    try {
+      const messages = [{ role: 'system', content: systemPrompt },
+        ...history.map(m => ({ role: m.role === 'model' ? 'assistant' : 'user', content: m.parts[0].text }))];
+      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${groqKey}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: 'llama-3.3-70b-versatile', messages, temperature: 0.7, max_tokens: 400 })
+      });
+      const data = await res.json();
+      if (data.choices?.[0]?.message?.content) return data.choices[0].message.content.trim();
+    } catch(e) { console.warn('Groq API error:', e); }
+  }
+
+  // 2. Try Gemini (2.0 Flash)
   const geminiKey = getActiveKey('gemini');
   if (geminiKey) {
     try {
@@ -2016,24 +2036,11 @@ async function callNakshiAiPipeline(history, systemPrompt) {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
       });
       const data = await res.json();
-      if (data.candidates?.[0]?.content?.parts?.[0]?.text) return data.candidates[0].content.parts[0].text;
-    } catch(e) { console.warn('Gemini failed', e); }
+      if (data.candidates?.[0]?.content?.parts?.[0]?.text) return data.candidates[0].content.parts[0].text.trim();
+    } catch(e) { console.warn('Gemini API error:', e); }
   }
-  // 2. Fallback Groq (OpenAI-compatible multi-turn)
-  const groqKey = getActiveKey('groq');
-  if (groqKey) {
-    try {
-      const messages = [{ role: 'system', content: systemPrompt },
-        ...history.map(m => ({ role: m.role === 'model' ? 'assistant' : 'user', content: m.parts[0].text }))];
-      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method: 'POST', headers: { 'Authorization': `Bearer ${groqKey}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ model: 'llama-3.3-70b-versatile', messages })
-      });
-      const data = await res.json();
-      if (data.choices?.[0]?.message?.content) return data.choices[0].message.content;
-    } catch(e) { console.warn('Groq failed', e); }
-  }
-  // 3. Fallback Sarvam
+
+  // 3. Try Sarvam
   const sarvamKey = getActiveKey('sarvam');
   if (sarvamKey) {
     try {
@@ -2044,12 +2051,25 @@ async function callNakshiAiPipeline(history, systemPrompt) {
         body: JSON.stringify({ model: 'sarvam-2b', messages })
       });
       const data = await res.json();
-      if (data.choices?.[0]?.message?.content) return data.choices[0].message.content;
-    } catch(e) { console.warn('Sarvam failed', e); }
+      if (data.choices?.[0]?.message?.content) return data.choices[0].message.content.trim();
+    } catch(e) { console.warn('Sarvam API error:', e); }
   }
-  // 4. Built-in fallback
+
+  // 4. Dynamic Socratic Offline Engine (Contextual fallback if no network/key)
   const name = getNakshiUserName();
-  return `I hear you, ${name}! That's a really interesting spot to get stuck. Let me ask you this first — when you read the problem, what's the very first thing that comes to mind?`;
+  const lastUserMsg = [...history].reverse().find(m => m.role === 'user')?.parts[0]?.text.toLowerCase() || '';
+
+  if (lastUserMsg.includes('no idea') || lastUserMsg.includes('where to start') || lastUserMsg.includes('how to prepare')) {
+    return `I hear you loud and clear, ${name}! Starting DSA can feel intimidating, but we break it down step-by-step.\n\nFirst, pick one language you feel comfortable with (like Python, Java, or C++), and start with basic Arrays & Strings. Are you already comfortable with basic loops and functions?`;
+  }
+  if (lastUserMsg.includes('cannot understand') || lastUserMsg.includes('don\'t understand') || lastUserMsg.includes('confused')) {
+    return `That's completely fine, ${name}! Let's slow down even further. Which part feels unclear — the problem goal itself, or how we trace the inputs?`;
+  }
+  if (lastUserMsg.includes('array') || lastUserMsg.includes('two sum')) {
+    return `Arrays are foundational, ${name}! When you look at an array problem, the key question is: can we solve it with two pointers, or do we need a Hash Map for fast lookup? Which one have you tried?`;
+  }
+
+  return `I completely hear you, ${name}! Let me help you break that down. Could you tell me in your own words what you think the input gives us and what output we are expecting?`;
 }
 
 function askAiAboutProblem(idOrName, topic) {
