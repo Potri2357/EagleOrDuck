@@ -1956,6 +1956,12 @@ function getActiveKey(provider) {
   }
   const localKey = localStorage.getItem(`${provider}_api_key`);
   if (localKey && localKey.trim()) return localKey.trim();
+
+  // Vercel / Runtime process.env check
+  const envName = provider.toUpperCase() + '_API_KEY';
+  if (typeof process !== 'undefined' && process.env && process.env[envName]) return process.env[envName].trim();
+  if (window.process && window.process.env && window.process.env[envName]) return window.process.env[envName].trim();
+
   return (DEPLOYMENT_KEYS[provider] && DEPLOYMENT_KEYS[provider].trim()) || null;
 }
 
