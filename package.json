@@ -4,6 +4,7 @@
   "description": "Static 90-day DSA tracker with Firebase Auth and Firestore sync.",
   "main": "index.html",
   "scripts": {
+    "start": "node sync-env.js && python3 -m http.server 8080",
     "sync-env": "node sync-env.js",
     "check": "node -e \"const fs=require('fs'); const html=fs.readFileSync('index.html','utf8'); for (const m of html.matchAll(/<script>([\\\\s\\\\S]*?)<\\\\/script>/g)) new Function(m[1]); console.log('index.html scripts compile')\""
   },
