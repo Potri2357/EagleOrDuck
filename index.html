@@ -805,20 +805,25 @@ body.auth-loading .login-screen { display: grid; }
   flex-shrink: 0;
 }
 .nakshi-header-text h3 { color: #e2ce95; font-size: 16px; font-weight: 800; margin: 0; }
-.nakshi-header-text span { color: rgba(226,206,149,0.65); font-size: 12px; }
-.nakshi-header-right { display: flex; gap: 8px; align-items: center; }
-.nakshi-icon-btn {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(203,178,106,0.25);
-  border-radius: 10px;
-  padding: 7px 10px;
-  color: #e2ce95;
-  cursor: pointer;
-  display: flex; align-items: center; gap: 6px;
-  font-size: 12.5px; font-family: 'DM Sans', sans-serif; font-weight: 700;
-  transition: background 0.18s ease;
-}
 .nakshi-icon-btn:hover { background: rgba(203,178,106,0.18); border-color: rgba(203,178,106,0.5); }
+
+/* Model Status Pill in Header */
+.nakshi-status-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(203,178,106,0.12);
+  border: 1px solid rgba(203,178,106,0.3);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 11px; font-weight: 700; color: #e2ce95;
+}
+.status-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  animation: pulseDot 1.8s infinite;
+}
+@keyframes pulseDot { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+
 
 /* Messages area */
 .nakshi-messages {
@@ -982,15 +987,101 @@ body.auth-loading .login-screen { display: grid; }
 @keyframes micPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.3); } 50% { box-shadow: 0 0 0 8px rgba(239,68,68,0); } }
 .nakshi-input-hint { font-size: 11.5px; color: var(--muted-light); text-align: center; }
 
-/* TTS speak button on bot messages */
-.nakshi-speak-btn {
-  background: none; border: none; cursor: pointer;
-  color: var(--muted); padding: 2px 4px;
-  font-size: 11px; display: flex; align-items: center; gap: 3px;
-  opacity: 0; transition: opacity 0.2s;
+/* Starter Prompt Chips (Welcome view) */
+.nakshi-starters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
 }
-.nakshi-msg-row:hover .nakshi-speak-btn { opacity: 1; }
-.nakshi-speak-btn:hover { color: var(--gold-dark); }
+.starter-chip {
+  background: #ffffff;
+  border: 1px solid var(--line-gold);
+  border-radius: 16px;
+  padding: 12px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  display: flex; align-items: center; gap: 10px;
+  transition: all 0.2s cubic-bezier(0.16,1,0.3,1);
+  box-shadow: 0 2px 8px rgba(203,178,106,0.06);
+}
+.starter-chip:hover {
+  border-color: var(--gold-primary);
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(203,178,106,0.15);
+}
+.starter-icon { font-size: 16px; flex-shrink: 0; }
+
+/* Reasoning / Thinking Box */
+.nakshi-reasoning {
+  background: #f7f4ed;
+  border: 1px solid rgba(203,178,106,0.35);
+  border-radius: 14px;
+  padding: 10px 14px;
+  font-size: 12.5px;
+  color: #715822;
+  margin-bottom: 8px;
+  max-width: 90%;
+  animation: msgIn 0.2s ease;
+}
+.nakshi-reasoning summary {
+  cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 6px;
+  user-select: none;
+}
+.nakshi-reasoning summary::-webkit-details-marker { display: none; }
+.reasoning-body { margin-top: 6px; color: var(--muted); line-height: 1.45; font-style: italic; }
+
+/* Quick Follow-up Action Chips (below bot msg) */
+.nakshi-quick-actions {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-top: 8px; margin-left: 40px;
+}
+.quick-action-pill {
+  background: #ffffff;
+  border: 1px solid var(--line-gold);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px; font-weight: 700; color: var(--gold-dark);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.quick-action-pill:hover {
+  background: var(--gold-btn-gradient);
+  color: #fff;
+  border-color: transparent;
+  transform: scale(1.04);
+}
+
+/* Bot Message Action Toolbar */
+.nakshi-toolbar {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 5px; margin-left: 2px;
+  opacity: 0.85; transition: opacity 0.2s;
+}
+.nakshi-tool-btn {
+  background: none; border: none; cursor: pointer;
+  color: var(--muted); padding: 3px 6px;
+  font-size: 11.5px; border-radius: 6px;
+  display: inline-flex; align-items: center; gap: 4px;
+  transition: all 0.15s ease;
+  font-family: 'DM Sans', sans-serif;
+}
+.nakshi-tool-btn:hover { background: rgba(203,178,106,0.15); color: var(--gold-dark); }
+.nakshi-tool-btn.active { color: var(--gold-dark); font-weight: 700; }
+
+/* Inline code formatting */
+.nakshi-bubble code {
+  background: #f4efe6;
+  border: 1px solid rgba(203,178,106,0.3);
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12.5px;
+  color: #715822;
+}
 
 .footer { margin-top: 40px; text-align: center; color: var(--muted); font-size: 13px; }
 
@@ -1210,7 +1301,10 @@ body.auth-loading .login-screen { display: grid; }
         <div class="nakshi-avatar-ring">N</div>
         <div class="nakshi-header-text">
           <h3>Nakshi</h3>
-          <span>Your Adaptive DSA Mentor</span>
+          <span class="nakshi-status-badge">
+            <span class="status-dot"></span>
+            Groq LLaMA 3.3 70B (Socratic)
+          </span>
         </div>
       </div>
       <div class="nakshi-header-right">
@@ -1872,18 +1966,47 @@ Your teaching philosophy:
 - Keep a friendly, mentor-like tone throughout, like a brilliant older friend who genuinely wants ${name} to succeed.`;
 }
 
-function nakshiBotRow(text, id) {
-  const shortName = getNakshiUserName();
-  const userInitials = shortName.substring(0, 2).toUpperCase();
+function formatNakshiText(text) {
+  let formatted = esc(text);
+  // Format inline code `code`
+  formatted = formatted.replace(/`([^`]+)`/g, '<code>$1</code>');
+  // Format bold **text**
+  formatted = formatted.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  return formatted;
+}
+
+function nakshiBotRow(text, id, hideActions = false) {
   const uid = id || ('bot-' + Date.now());
+  const bodyHtml = formatNakshiText(text);
+  
+  const quickActionsHtml = hideActions ? '' : `
+  <div class="nakshi-quick-actions">
+    <button class="quick-action-pill" onclick="sendNakshiMessage('💡 Can you give me a simple hint?')">💡 Simple hint</button>
+    <button class="quick-action-pill" onclick="sendNakshiMessage('⚡ What is the time & space complexity?')">⚡ Time complexity?</button>
+    <button class="quick-action-pill" onclick="sendNakshiMessage('🎯 I understand! What is the next step?')">🎯 Next step?</button>
+  </div>`;
+
   return `<div class="nakshi-msg-row bot" id="${uid}">
     <div class="nakshi-msg-avatar">N</div>
     <div>
-      <div class="nakshi-bubble bot">${esc(text)}</div>
-      <button class="nakshi-speak-btn" onclick="nakshiSpeak(this)">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-        Speak
-      </button>
+      <div class="nakshi-bubble bot">${bodyHtml}</div>
+      <div class="nakshi-toolbar">
+        <button class="nakshi-tool-btn" onclick="copyNakshiText(this)" title="Copy message">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          Copy
+        </button>
+        <button class="nakshi-tool-btn" onclick="nakshiSpeak(this)" title="Listen to response">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          Speak
+        </button>
+        <button class="nakshi-tool-btn" onclick="this.classList.toggle('active')" title="Helpful">
+          👍
+        </button>
+        <button class="nakshi-tool-btn" onclick="this.classList.toggle('active')" title="Not helpful">
+          👎
+        </button>
+      </div>
+      ${quickActionsHtml}
     </div>
   </div>`;
 }
@@ -1898,7 +2021,17 @@ function nakshiUserRow(text) {
 }
 
 function nakshiTypingRow() {
-  return `<div class="nakshi-typing-row" id="nakshiTyping">
+  return `
+  <div class="nakshi-reasoning" id="nakshiReasoning">
+    <details open>
+      <summary>
+        <span>🧠</span>
+        <span>Nakshi is reasoning...</span>
+      </summary>
+      <div class="reasoning-body">Analyzing Socratic context, formulating adaptive follow-up...</div>
+    </details>
+  </div>
+  <div class="nakshi-typing-row" id="nakshiTyping">
     <div class="nakshi-msg-avatar">N</div>
     <div class="nakshi-typing-bubble">
       <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
@@ -1908,7 +2041,28 @@ function nakshiTypingRow() {
 
 function nakshiGreeting() {
   const name = getNakshiUserName();
-  return `Hey ${name}! I'm Nakshi, your personal DSA mentor. I'm here to help you truly understand concepts, not just memorize them.\n\nTell me — what are you working on today, or where do you feel stuck? Let's figure it out together.`;
+  return `<div style="line-height:1.6">
+    Hey ${name}! I'm <strong>Nakshi</strong>, your personal DSA mentor. I'm here to help you truly master patterns through guided problem-solving.<br><br>
+    What are you working on today, or where do you feel stuck? Tap any starter below or type your question:
+  </div>
+  <div class="nakshi-starters">
+    <button class="starter-chip" onclick="sendNakshiMessage('🎯 I have no idea of DSA, tell me how to prepare for it from scratch!')">
+      <span class="starter-icon">🎯</span>
+      <span>How to start DSA from scratch</span>
+    </button>
+    <button class="starter-chip" onclick="sendNakshiMessage('💡 Explain the Sliding Window pattern simply with an example')">
+      <span class="starter-icon">💡</span>
+      <span>Sliding Window pattern explained</span>
+    </button>
+    <button class="starter-chip" onclick="sendNakshiMessage('⚡ How to identify Two Pointers vs Hash Map for Array problems?')">
+      <span class="starter-icon">⚡</span>
+      <span>Two Pointers vs Hash Map</span>
+    </button>
+    <button class="starter-chip" onclick="sendNakshiMessage('🧪 Quiz me on Array & String interview patterns!')">
+      <span class="starter-icon">🧪</span>
+      <span>Quiz me on Interview Patterns</span>
+    </button>
+  </div>`;
 }
 
 function openNakshiModal(prefillText, contextLabel) {
@@ -1975,12 +2129,11 @@ function autoResizeTextarea(el) {
   el.style.height = Math.min(el.scrollHeight, 120) + 'px';
 }
 
-async function sendNakshiMessage() {
+async function sendNakshiMessage(textOverride) {
   const input = document.getElementById('nakshiInput');
-  const text = input.value.trim();
+  const text = (textOverride || input.value).trim();
   if (!text) return;
-  input.value = '';
-  input.style.height = 'auto';
+  if (!textOverride) { input.value = ''; input.style.height = 'auto'; }
 
   const sendBtn = document.getElementById('nakshiSendBtn');
   if (sendBtn) sendBtn.disabled = true;
@@ -1990,17 +2143,19 @@ async function sendNakshiMessage() {
   nakshiHistory.push({ role: 'user', parts: [{ text }] });
   scrollNakshi();
 
-  // Add typing indicator
+  // Add reasoning & typing indicator
   msgs.innerHTML += nakshiTypingRow();
   scrollNakshi();
 
   try {
     const reply = await callNakshiAiPipeline(nakshiHistory, getNakshiSystemPrompt());
+    document.getElementById('nakshiReasoning')?.remove();
     document.getElementById('nakshiTyping')?.remove();
     nakshiHistory.push({ role: 'model', parts: [{ text: reply }] });
     msgs.innerHTML += nakshiBotRow(reply);
     scrollNakshi();
   } catch (err) {
+    document.getElementById('nakshiReasoning')?.remove();
     document.getElementById('nakshiTyping')?.remove();
     const errMsg = 'I had a little hiccup connecting. Please try again in a moment!';
     msgs.innerHTML += nakshiBotRow(errMsg);
@@ -2008,6 +2163,18 @@ async function sendNakshiMessage() {
   }
   if (sendBtn) sendBtn.disabled = false;
   document.getElementById('nakshiInput').focus();
+}
+
+function copyNakshiText(btn) {
+  const bubble = btn.closest('.nakshi-msg-row')?.querySelector('.nakshi-bubble');
+  if (!bubble) return;
+  const text = bubble.innerText || bubble.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.innerHTML;
+    btn.innerHTML = 'Copied! ✔';
+    btn.classList.add('active');
+    setTimeout(() => { btn.innerHTML = orig; btn.classList.remove('active'); }, 1800);
+  });
 }
 
 async function callNakshiAiPipeline(history, systemPrompt) {
