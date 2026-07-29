@@ -2568,7 +2568,7 @@ function renderTrail() {
     const btn = document.createElement('button');
     btn.className = 'day-dot ' + (solved === 0 ? '' : solved === rows.length ? 'full' : 'partial') + (d === todayDay ? ' today' : '') + (d === (selectedDay || todayDay) ? ' selected' : '');
     btn.title = `Day ${d}: ${solved}/${rows.length} solved`;
-    btn.onclick = () => { selectedDay = d; switchTab('today'); };
+    btn.onclick = () => { selectedDay = d; switchTab('today'); render(); };
     trail.appendChild(btn);
   }
   const solvedTotal = PROBLEMS.filter(p => getState(p.id).solved).length;
@@ -2664,6 +2664,7 @@ function switchTab(name) {
   currentTab = name;
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
   document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === 'view-' + name));
+  if (name === 'today') renderToday();
   if (name === 'anki') renderAnkiView();
   if (name === 'saved') renderSaved();
 }
