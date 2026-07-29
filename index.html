@@ -69,70 +69,102 @@ a { color: inherit; }
 /* Buttons & Controls */
 .btn {
   border: 1px solid var(--line-gold);
-  background: #ffffff;
+  background: transparent;
   border-radius: 999px;
-  padding: 9px 18px;
+  padding: 6px 14px;
   font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 700;
-  color: var(--ink);
+  color: var(--muted);
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+  gap: 6px;
   text-decoration: none;
   user-select: none;
+  white-space: nowrap;
 }
 .btn:hover {
   border-color: var(--gold-primary);
-  transform: translateY(-1.5px);
-  box-shadow: 0 6px 16px rgba(203, 178, 106, 0.18);
+  color: var(--gold-dark);
+  background: rgba(203, 178, 106, 0.08);
+  transform: translateY(-1px);
 }
 .btn:active {
   transform: translateY(0);
+  background: rgba(203, 178, 106, 0.14);
 }
+
+/* Primary — gold outline chip */
 .btn.primary {
-  background: var(--gold-btn-gradient);
-  color: #ffffff;
-  border: none;
-  box-shadow: 0 4px 14px rgba(164, 137, 67, 0.28);
+  background: transparent;
+  border-color: var(--gold-primary);
+  color: var(--gold-dark);
+  font-weight: 800;
 }
 .btn.primary:hover {
-  background: var(--gold-btn-hover);
-  box-shadow: 0 6px 20px rgba(164, 137, 67, 0.38);
-  transform: translateY(-2px);
+  background: rgba(203, 178, 106, 0.14);
+  border-color: var(--gold-dark);
+  color: var(--gold-dark);
+  transform: translateY(-1px);
 }
+
+/* Solved / Done — green outline chip */
 .btn.done {
-  background: linear-gradient(135deg, #16a34a, #15803d);
-  color: #ffffff;
-  border: none;
-  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2);
+  background: transparent;
+  border-color: #16a34a;
+  color: #15803d;
 }
+.btn.done:hover {
+  background: rgba(22, 163, 74, 0.08);
+  border-color: #15803d;
+}
+
+/* Warn */
 .btn.warn {
-  background: var(--gold-light);
+  background: transparent;
   border-color: #d8c697;
   color: #715822;
 }
+.btn.warn:hover {
+  background: rgba(203, 178, 106, 0.1);
+}
 
-/* Nakshi AI Button Styling */
+.btn.sm {
+  padding: 5px 12px;
+  font-size: 12px;
+}
+
+/* Solution button — indigo chip */
+.btn.sol-btn {
+  background: transparent;
+  border-color: rgba(99, 102, 241, 0.55);
+  color: #4f46e5;
+}
+.btn.sol-btn:hover {
+  background: rgba(99, 102, 241, 0.09);
+  border-color: #6366f1;
+  color: #4338ca;
+  transform: translateY(-1px);
+}
+.btn.sol-btn.has-solution {
+  border-color: #818cf8;
+  color: #4f46e5;
+}
+
+/* Ask Nakshi button — violet-purple chip */
 .btn.ai-btn {
-  background: linear-gradient(135deg, #1c1917, #2c251e);
-  color: #e2ce95;
-  border: 1px solid #cbb26a;
-  box-shadow: 0 4px 14px rgba(28, 25, 23, 0.25);
+  background: transparent;
+  border-color: rgba(192, 132, 252, 0.55);
+  color: #7e22ce;
 }
 .btn.ai-btn:hover {
-  background: linear-gradient(135deg, #2d261f, #3d3227);
-  border-color: #d8c17b;
-  box-shadow: 0 6px 18px rgba(203, 178, 106, 0.28);
-  transform: translateY(-1.5px);
-}
-.btn.sm {
-  padding: 6px 14px;
-  font-size: 12.5px;
+  background: rgba(147, 51, 234, 0.08);
+  border-color: #c084fc;
+  color: #6b21a8;
+  transform: translateY(-1px);
 }
 
 /* Icon-only bookmark button on each card */
@@ -160,24 +192,24 @@ a { color: inherit; }
   border-color: var(--gold-primary);
 }
 
-/* Cold Revisit button active state */
+/* Cold Revisit active state — blue chip */
 .btn.revisited-btn {
-  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
-  color: #1e40af;
+  background: transparent;
+  color: #2563eb;
   border-color: #93c5fd;
 }
 .btn.revisited-btn:hover {
-  background: linear-gradient(135deg, #bfdbfe, #93c5fd);
+  background: rgba(37, 99, 235, 0.07);
   border-color: #60a5fa;
 }
 
-/* Solved Alone label active state */
+/* Solved Alone label — green chip when checked */
 .alone-label {
-  transition: all 0.2s ease;
+  transition: all 0.18s ease;
 }
 .alone-label:has(input:checked) {
-  background: linear-gradient(135deg, #f0fdf4, #dcfce7);
-  border-color: #86efac;
+  background: transparent;
+  border-color: #16a34a;
   color: #15803d;
 }
 
@@ -300,34 +332,35 @@ a { color: inherit; }
 /* Tabs & Navigation */
 .tabs {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
   margin: 24px 0;
 }
 .tab {
   border: 1px solid var(--line-gold);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.88);
+  background: transparent;
   color: var(--muted);
-  padding: 11px 18px;
+  padding: 8px 16px;
   font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.18s ease;
   display: inline-flex;
   align-items: center;
   gap: 6px;
 }
 .tab:hover {
   border-color: var(--gold-primary);
-  color: var(--ink);
+  color: var(--gold-dark);
+  background: rgba(203, 178, 106, 0.08);
 }
 .tab.active {
-  background: var(--gold-btn-gradient);
-  border-color: transparent;
-  color: #ffffff;
-  box-shadow: 0 4px 16px rgba(164, 137, 67, 0.28);
+  background: rgba(203, 178, 106, 0.12);
+  border-color: var(--gold-primary);
+  color: var(--gold-dark);
+  font-weight: 800;
 }
 
 /* Panels */
@@ -406,7 +439,7 @@ a { color: inherit; }
   gap: 12px;
   margin-bottom: 16px;
 }
-.filters input, .filters select, .settings input {
+.filters select, .settings input {
   border: 1px solid var(--line-gold);
   background: #ffffff;
   color: var(--ink);
@@ -417,9 +450,91 @@ a { color: inherit; }
   outline: none;
   transition: border-color 0.2s ease;
 }
-.filters input:focus, .filters select:focus {
+.filters select:focus {
   border-color: var(--gold-primary);
   box-shadow: 0 0 0 3px rgba(203, 178, 106, 0.15);
+}
+
+/* Search bar wrapper */
+.search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.search-wrap .search-icon {
+  position: absolute;
+  left: 14px;
+  color: var(--muted-light);
+  pointer-events: none;
+  transition: color 0.2s ease;
+  flex-shrink: 0;
+}
+.search-wrap:focus-within .search-icon {
+  color: var(--gold-dark);
+}
+.search-wrap #searchInput {
+  width: 100%;
+  border: 1px solid var(--line-gold);
+  background: #ffffff;
+  color: var(--ink);
+  border-radius: 14px;
+  padding: 10px 40px 10px 42px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.search-wrap #searchInput:focus {
+  border-color: var(--gold-primary);
+  box-shadow: 0 0 0 3px rgba(203, 178, 106, 0.15);
+}
+.search-wrap #searchInput::placeholder { color: var(--muted-light); }
+.search-clear {
+  position: absolute;
+  right: 10px;
+  background: var(--paper-2);
+  border: 1px solid var(--line-gold);
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, background 0.15s ease;
+}
+.search-clear.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.search-clear:hover { background: var(--gold-light); color: var(--gold-dark); }
+.search-kbd {
+  position: absolute;
+  right: 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--muted-light);
+  background: var(--paper-2);
+  border: 1px solid var(--line-gold);
+  border-radius: 6px;
+  padding: 2px 6px;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+.search-kbd.hidden { opacity: 0; }
+
+/* Search highlight */
+mark.search-hl {
+  background: linear-gradient(135deg, rgba(203,178,106,0.35), rgba(203,178,106,0.15));
+  color: var(--gold-dark);
+  border-radius: 3px;
+  padding: 0 1px;
+  font-weight: 800;
 }
 
 .view { display: none; }
@@ -1115,6 +1230,179 @@ body.auth-loading .login-screen { display: grid; }
   .anki-srs-btns { grid-template-columns: 1fr 1fr; }
   .nakshi-modal { border-radius: 20px; }
 }
+
+/* ── Solution Modal ────────────────────────────────────────── */
+.sol-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 17, 12, 0.72);
+  backdrop-filter: blur(8px);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.sol-overlay.open { display: flex; }
+.sol-modal {
+  width: min(820px, 100%);
+  height: min(90vh, 820px);
+  background: #1a1917;
+  border: 1px solid rgba(203, 178, 106, 0.3);
+  border-radius: 24px;
+  box-shadow: 0 32px 90px rgba(0,0,0,0.55);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: nakshiIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.sol-header {
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #181614 0%, #24201a 100%);
+  border-bottom: 1px solid rgba(203, 178, 106, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.sol-header-left { display: flex; align-items: center; gap: 12px; }
+.sol-icon {
+  width: 38px; height: 38px;
+  border-radius: 12px;
+  background: var(--gold-btn-gradient);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+}
+.sol-title { color: #e2ce95; font-weight: 800; font-size: 15px; margin: 0; line-height: 1.2; }
+.sol-subtitle { color: rgba(226,206,149,0.55); font-size: 11.5px; margin-top: 2px; }
+.sol-header-right { display: flex; align-items: center; gap: 8px; }
+.sol-icon-btn {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(203,178,106,0.22);
+  border-radius: 8px;
+  padding: 6px 12px;
+  color: #e2ce95;
+  cursor: pointer;
+  font-size: 12px; font-family: 'DM Sans', sans-serif; font-weight: 700;
+  display: flex; align-items: center; gap: 6px;
+  transition: all 0.18s ease;
+}
+.sol-icon-btn:hover { background: rgba(203,178,106,0.15); border-color: rgba(203,178,106,0.5); }
+.sol-icon-btn.close-btn { color: rgba(226,206,149,0.6); }
+.sol-icon-btn.save-btn {
+  background: var(--gold-btn-gradient);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(164,137,67,0.3);
+}
+.sol-icon-btn.save-btn:hover { background: var(--gold-btn-hover); box-shadow: 0 6px 18px rgba(164,137,67,0.42); }
+.sol-toolbar {
+  padding: 10px 20px;
+  background: #141210;
+  border-bottom: 1px solid rgba(203,178,106,0.1);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.sol-lang-select {
+  background: #1e1b18;
+  border: 1px solid rgba(203,178,106,0.22);
+  border-radius: 8px;
+  color: #e2ce95;
+  padding: 5px 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  outline: none;
+  cursor: pointer;
+}
+.sol-lang-select:focus { border-color: var(--gold-primary); }
+.sol-saved-pill {
+  margin-left: auto;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: #4ade80;
+  display: none;
+  align-items: center;
+  gap: 5px;
+}
+.sol-saved-pill.show { display: flex; }
+.sol-saved-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 6px #22c55e;
+}
+.sol-editor-wrap {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+.sol-line-nums {
+  padding: 16px 0;
+  background: #141210;
+  border-right: 1px solid rgba(203,178,106,0.08);
+  text-align: right;
+  user-select: none;
+  min-width: 48px;
+  overflow: hidden;
+}
+.sol-line-nums span {
+  display: block;
+  padding: 0 12px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  line-height: 1.65;
+  color: rgba(203,178,106,0.3);
+}
+#solEditor {
+  flex: 1;
+  padding: 16px;
+  background: #1a1917;
+  color: #e8dfc8;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13.5px;
+  line-height: 1.65;
+  border: none;
+  outline: none;
+  resize: none;
+  tab-size: 4;
+  white-space: pre;
+  overflow-wrap: normal;
+  overflow-x: auto;
+  caret-color: #cbb26a;
+}
+#solEditor::placeholder { color: rgba(203,178,106,0.25); }
+#solEditor::selection { background: rgba(203,178,106,0.22); }
+.sol-footer {
+  padding: 10px 20px;
+  background: #141210;
+  border-top: 1px solid rgba(203,178,106,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.sol-footer-hint {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: rgba(203,178,106,0.4);
+}
+/* Solution button saved indicator */
+.btn .sol-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 6px #22c55e;
+  display: inline-block;
+}
+@media(max-width: 540px) {
+  .sol-modal { border-radius: 18px; height: 95vh; }
+  .sol-line-nums { display: none; }
+}
 </style>
 <script src="config.js"></script>
 <!-- ENV:START -->
@@ -1259,7 +1547,12 @@ window.ENV_FIREBASE = window.ENV_FIREBASE || {};
           <div class="small mono" id="allCount">153 shown</div>
         </div>
         <div class="filters">
-          <input id="searchInput" placeholder="Search problem name, topic, LC #...">
+          <div class="search-wrap">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input id="searchInput" placeholder="Search problem name, topic, LC #…  " autocomplete="off" spellcheck="false">
+            <span class="search-kbd" id="searchKbd">⌘K</span>
+            <button class="search-clear" id="searchClear" title="Clear search" onclick="clearSearch()">✕</button>
+          </div>
           <select id="topicFilter"></select>
           <select id="difficultyFilter">
             <option value="all">All Difficulties</option>
@@ -1306,6 +1599,75 @@ window.ENV_FIREBASE = window.ENV_FIREBASE || {};
   </main>
 
   <div class="footer">Built for dedicated CS students. Mastery comes from boiling down concepts to first principles and testing recall cold.</div>
+</div>
+
+<!-- SOLUTION CODE MODAL -->
+<div class="sol-overlay" id="solOverlay" onclick="closeSolutionOnBackdrop(event)">
+  <div class="sol-modal">
+    <!-- Header -->
+    <div class="sol-header">
+      <div class="sol-header-left">
+        <div class="sol-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <div>
+          <div class="sol-title" id="solModalTitle">My Solution</div>
+          <div class="sol-subtitle" id="solModalSubtitle">Write, save, and review your approach</div>
+        </div>
+      </div>
+      <div class="sol-header-right">
+        <button class="sol-icon-btn" onclick="copySolution()" title="Copy code">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          Copy
+        </button>
+        <button class="sol-icon-btn" onclick="clearSolution()" title="Clear editor">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+          Clear
+        </button>
+        <button class="sol-icon-btn save-btn" onclick="saveSolution()" title="Save solution">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          Save
+        </button>
+        <button class="sol-icon-btn close-btn" onclick="closeSolutionModal()" title="Close">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+    </div>
+    <!-- Toolbar -->
+    <div class="sol-toolbar">
+      <select class="sol-lang-select" id="solLang" onchange="saveSolutionLang()">
+        <option value="python">Python</option>
+        <option value="java">Java</option>
+        <option value="cpp">C++</option>
+        <option value="javascript">JavaScript</option>
+        <option value="typescript">TypeScript</option>
+        <option value="go">Go</option>
+        <option value="rust">Rust</option>
+        <option value="c">C</option>
+        <option value="kotlin">Kotlin</option>
+        <option value="swift">Swift</option>
+      </select>
+      <span style="color:rgba(203,178,106,0.3);font-family:'IBM Plex Mono',monospace;font-size:11px;">Tab = 4 spaces &middot; Ctrl+S saves</span>
+      <div class="sol-saved-pill" id="solSavedPill">
+        <span class="sol-saved-dot"></span>
+        Saved
+      </div>
+    </div>
+    <!-- Editor -->
+    <div class="sol-editor-wrap">
+      <div class="sol-line-nums" id="solLineNums"><span>1</span></div>
+      <textarea id="solEditor"
+        placeholder=""
+        oninput="updateSolLineNums(); debounceSolSave();"
+        onkeydown="solHandleTab(event);"
+      ></textarea>
+    </div>
+    <!-- Footer -->
+    <div class="sol-footer">
+      <span class="sol-footer-hint">Ctrl+S to save &middot; Ctrl+Enter to save &amp; close</span>
+      <span class="sol-footer-hint" id="solCharCount">0 chars</span>
+    </div>
+  </div>
 </div>
 
 <!-- NAKSHI AI FAB -->
@@ -1482,7 +1844,9 @@ function mergeCloudData(data) {
       notes: local.notes || cloud.notes || '',
       solvedDate: local.solvedDate || cloud.solvedDate || null,
       nextReview: local.nextReview || cloud.nextReview || null,
-      stage: Math.max(Number(local.stage || 0), Number(cloud.stage || 0))
+      stage: Math.max(Number(local.stage || 0), Number(cloud.stage || 0)),
+      solution: local.solution || cloud.solution || '',
+      solutionLang: local.solutionLang || cloud.solutionLang || 'python'
     };
   });
   state = merged;
@@ -1572,7 +1936,220 @@ function markAnkiRating(id, daysToAdd) {
 function setAlone(id, val) { getState(id).alone = val; save(); render(); }
 function setRevisit(id, val) { getState(id).revisited = val; save(); render(); }
 function setNotes(id, val) { getState(id).notes = val; save(); }
+function setSolution(id, val, lang) { const st = getState(id); st.solution = val; if (lang) st.solutionLang = lang; save(); }
 function rememberHint(id, isOpen) { isOpen ? openHints.add(id) : openHints.delete(id); }
+
+/* ── Solution Modal ─────────────────────────────────────────── */
+const SOL_PLACEHOLDERS = {
+  python: `class Solution:
+    def solve(self, nums: list[int]) -> int:
+        # 1. Identify the pattern (sliding window / two-pointer / DP...)
+        # 2. Handle edge cases first
+        # 3. Write the core logic
+        # Time: O(n)  Space: O(1)
+        pass`,
+
+  java: `class Solution {
+    public int solve(int[] nums) {
+        // 1. Identify the pattern
+        // 2. Handle edge cases first
+        // 3. Write the core logic
+        // Time: O(n)  Space: O(1)
+        return -1;
+    }
+}`,
+
+  cpp: `class Solution {
+public:
+    int solve(vector<int>& nums) {
+        // 1. Identify the pattern
+        // 2. Handle edge cases first
+        // 3. Write the core logic
+        // Time: O(n)  Space: O(1)
+        return -1;
+    }
+};`,
+
+  javascript: `/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var solve = function(nums) {
+    // 1. Identify the pattern
+    // 2. Handle edge cases first
+    // 3. Write the core logic
+    // Time: O(n)  Space: O(1)
+};`,
+
+  typescript: `function solve(nums: number[]): number {
+    // 1. Identify the pattern
+    // 2. Handle edge cases first
+    // 3. Write the core logic
+    // Time: O(n)  Space: O(1)
+    return -1;
+}`,
+
+  go: `func solve(nums []int) int {
+    // 1. Identify the pattern
+    // 2. Handle edge cases first
+    // 3. Write the core logic
+    // Time: O(n)  Space: O(1)
+    return -1
+}`,
+
+  rust: `impl Solution {
+    pub fn solve(nums: Vec<i32>) -> i32 {
+        // 1. Identify the pattern
+        // 2. Handle edge cases first
+        // 3. Write the core logic
+        // Time: O(n)  Space: O(1)
+        -1
+    }
+}`,
+
+  c: `int solve(int* nums, int numsSize) {
+    // 1. Identify the pattern
+    // 2. Handle edge cases first
+    // 3. Write the core logic
+    // Time: O(n)  Space: O(1)
+    return -1;
+}`,
+
+  kotlin: `class Solution {
+    fun solve(nums: IntArray): Int {
+        // 1. Identify the pattern
+        // 2. Handle edge cases first
+        // 3. Write the core logic
+        // Time: O(n)  Space: O(1)
+        return -1
+    }
+}`,
+
+  swift: `class Solution {
+    func solve(_ nums: [Int]) -> Int {
+        // 1. Identify the pattern
+        // 2. Handle edge cases first
+        // 3. Write the core logic
+        // Time: O(n)  Space: O(1)
+        return -1
+    }
+}`
+};
+
+let _solCurrentId = null;
+let _solSaveTimer = null;
+
+function openSolutionModal(id, name) {
+  _solCurrentId = id;
+  const st = getState(id);
+  const overlay = document.getElementById('solOverlay');
+  const editor  = document.getElementById('solEditor');
+  const langSel = document.getElementById('solLang');
+  document.getElementById('solModalTitle').textContent = name || 'My Solution';
+  document.getElementById('solModalSubtitle').textContent =
+    firebaseDb && currentUser ? `☁️ Synced to Firebase · ${currentUser.displayName || currentUser.email}` : '💾 Stored locally (sign in to sync)';
+  const savedLang = st.solutionLang || 'python';
+  langSel.value = savedLang;
+  editor.value = st.solution || '';
+  updateSolPlaceholder(savedLang);
+  updateSolLineNums();
+  updateSolCharCount();
+  showSolSavedPill(!!st.solution);
+  overlay.classList.add('open');
+  setTimeout(() => editor.focus(), 80);
+}
+
+function closeSolutionModal() {
+  document.getElementById('solOverlay')?.classList.remove('open');
+  _solCurrentId = null;
+  if (_solSaveTimer) clearTimeout(_solSaveTimer);
+}
+
+function closeSolutionOnBackdrop(e) {
+  if (e.target === document.getElementById('solOverlay')) closeSolutionModal();
+}
+
+function saveSolution() {
+  if (!_solCurrentId) return;
+  const code = document.getElementById('solEditor').value;
+  const lang  = document.getElementById('solLang').value;
+  setSolution(_solCurrentId, code, lang);
+  showSolSavedPill(true);
+  render(); // refresh cards so the green dot updates
+}
+
+function saveSolutionLang() {
+  if (!_solCurrentId) return;
+  const lang = document.getElementById('solLang').value;
+  getState(_solCurrentId).solutionLang = lang;
+  save();
+  updateSolPlaceholder(lang);
+}
+
+function updateSolPlaceholder(lang) {
+  const editor = document.getElementById('solEditor');
+  if (editor) editor.placeholder = SOL_PLACEHOLDERS[lang] || SOL_PLACEHOLDERS.python;
+}
+
+function debounceSolSave() {
+  updateSolCharCount();
+  if (_solSaveTimer) clearTimeout(_solSaveTimer);
+  _solSaveTimer = setTimeout(saveSolution, 1200);
+}
+
+function showSolSavedPill(show) {
+  document.getElementById('solSavedPill')?.classList.toggle('show', show);
+}
+
+function copySolution() {
+  const code = document.getElementById('solEditor').value;
+  if (!code) return;
+  navigator.clipboard.writeText(code).then(() => {
+    const btn = event.currentTarget;
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Copied!';
+    setTimeout(() => btn.innerHTML = orig, 1600);
+  });
+}
+
+function clearSolution() {
+  if (!confirm('Clear the editor? Your saved solution will also be deleted.')) return;
+  const editor = document.getElementById('solEditor');
+  editor.value = '';
+  updateSolLineNums();
+  updateSolCharCount();
+  showSolSavedPill(false);
+  if (_solCurrentId) setSolution(_solCurrentId, '', null);
+  render();
+}
+
+function updateSolLineNums() {
+  const editor = document.getElementById('solEditor');
+  const nums   = document.getElementById('solLineNums');
+  if (!editor || !nums) return;
+  const lines = editor.value.split('\n').length;
+  nums.innerHTML = Array.from({length: lines}, (_, i) => `<span>${i + 1}</span>`).join('');
+}
+
+function updateSolCharCount() {
+  const editor = document.getElementById('solEditor');
+  const el = document.getElementById('solCharCount');
+  if (!editor || !el) return;
+  const len = editor.value.length;
+  el.textContent = `${len.toLocaleString()} char${len !== 1 ? 's' : ''}`;
+}
+
+function solHandleTab(e) {
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    const el = e.target, s = el.selectionStart, end = el.selectionEnd;
+    el.value = el.value.slice(0, s) + '    ' + el.value.slice(end);
+    el.selectionStart = el.selectionEnd = s + 4;
+    updateSolLineNums();
+  }
+  if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); saveSolution(); }
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); saveSolution(); closeSolutionModal(); }
+}
 
 
 /* ── Lucide SVG helpers (inline, no dep) ───────────────────────── */
@@ -1586,6 +2163,7 @@ const SVG = {
   bookmark:     `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>`,
   bookmarkFill: `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>`,
   lightbulb:    `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>`,
+  code:         `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
   repeat:       `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>`,
   target:       `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>`,
   zap:          `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
@@ -1601,22 +2179,25 @@ function toggleFavourite(id) {
   render();
 }
 
-function itemCard(p) {
+function itemCard(p, query = '') {
   const st = getState(p.id), diff = difficulty(p), premium = PREMIUM.has(p.lc), solved = st.solved, due = st.nextReview && st.nextReview <= todayISO();
   const favs = getFavourites(), isFav = !!favs[p.id];
   const cls = ['item', solved ? 'solved' : '', due ? 'revisit' : '', diff === 'Hard' ? 'problem-hard' : '', !p.lc ? 'study' : ''].join(' ');
+  const displayName = query ? highlightMatch(`Day ${p.day}: ${p.name}`, query) : `Day ${p.day}: ${p.name}`;
+  const displayTopic = query ? highlightMatch(p.topic, query) : p.topic;
+  const displayLc = p.lc ? (query ? highlightMatch('LC ' + p.lc, query) : 'LC ' + p.lc) : 'No LC';
   return `
   <article class="${cls}">
     <div class="item-top">
       <div>
         <div class="title-line">
-          <span class="item-name">Day ${p.day}: ${p.name}</span>
+          <span class="item-name">${displayName}</span>
           ${due ? '<span class="badge medium">Revisit Due</span>' : ''}
         </div>
         <div class="badges">
-          <span class="badge">${p.lc ? 'LC ' + p.lc : 'No LC'}</span>
+          <span class="badge">${displayLc}</span>
           <span class="badge ${diff.toLowerCase()}">${diff}</span>
-          <span class="badge">${p.topic}</span>
+          <span class="badge">${displayTopic}</span>
           ${premium ? '<span class="badge premium">Premium</span>' : ''}
         </div>
       </div>
@@ -1639,6 +2220,9 @@ function itemCard(p) {
       <button class="btn sm ${st.revisited ? 'revisited-btn' : ''}" onclick="setRevisit('${p.id}',${!st.revisited})" title="Cold Revisit">
         ${SVG.repeat} ${st.revisited ? 'Revisited' : 'Cold Revisit'}
       </button>
+      <button class="btn sm sol-btn ${st.solution ? 'has-solution' : ''}" onclick="openSolutionModal('${p.id}','${esc(p.name)}')">
+        ${SVG.code} Solution${st.solution ? ' <span class="sol-dot"></span>' : ''}
+      </button>
       <button class="btn sm ai-btn" onclick="askAiAboutProblem('${p.id}')">
         ${SVG.sparkles} Ask Nakshi
       </button>
@@ -1651,8 +2235,11 @@ function itemCard(p) {
   </article>`;
 }
 
-function renderList(el, list, empty = 'Nothing here yet.') {
-  el.innerHTML = list.length ? list.map(itemCard).join('') : `<div class="empty">${empty}</div>`;
+function renderList(el, list, query = '') {
+  const emptyMsg = query
+    ? `<div class="empty">😕 No problems found for <strong>"${query}"</strong>.<br><span style="font-size:13px">Try a different keyword, topic, or LC number.</span></div>`
+    : `<div class="empty">Nothing here yet.</div>`;
+  el.innerHTML = list.length ? list.map(p => itemCard(p, query)).join('') : emptyMsg;
 }
 
 function renderToday() {
@@ -1688,11 +2275,32 @@ function renderToday() {
   if (overdue.length) renderList(document.getElementById('dueList'), overdue);
 }
 
+function highlightMatch(text, query) {
+  if (!query) return text;
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return text.replace(new RegExp(`(${escaped})`, 'gi'), '<mark class="search-hl">$1</mark>');
+}
+
+function clearSearch() {
+  const inp = document.getElementById('searchInput');
+  if (inp) { inp.value = ''; inp.focus(); }
+  document.getElementById('searchClear')?.classList.remove('visible');
+  document.getElementById('searchKbd')?.classList.remove('hidden');
+  renderAll();
+}
+
 function renderAll() {
-  const q = document.getElementById('searchInput')?.value?.toLowerCase() || '';
+  const q = document.getElementById('searchInput')?.value?.toLowerCase().trim() || '';
   const topic = document.getElementById('topicFilter')?.value || 'all';
   const diff = document.getElementById('difficultyFilter')?.value || 'all';
   const type = document.getElementById('typeFilter')?.value || 'all';
+
+  // Update clear button & kbd shortcut visibility
+  const clearBtn = document.getElementById('searchClear');
+  const kbdEl = document.getElementById('searchKbd');
+  if (clearBtn) clearBtn.classList.toggle('visible', q.length > 0);
+  if (kbdEl) kbdEl.classList.toggle('hidden', q.length > 0);
+
   let list = PROBLEMS.filter(p => {
     const hay = `${p.day} ${p.lc} ${p.name} ${p.topic}`.toLowerCase();
     if (q && !hay.includes(q)) return false;
@@ -1702,9 +2310,14 @@ function renderAll() {
     if (type === 'revision' && p.lc) return false;
     return true;
   });
+  const total = PROBLEMS.length;
   const countEl = document.getElementById('allCount');
-  if (countEl) countEl.textContent = `${list.length}/153 shown`;
-  renderList(document.getElementById('allList'), list);
+  if (countEl) {
+    countEl.textContent = q
+      ? `${list.length} match${list.length !== 1 ? 'es' : ''} for "${document.getElementById('searchInput').value.trim()}"`
+      : `${list.length}/${total} shown`;
+  }
+  renderList(document.getElementById('allList'), list, q);
 }
 
 /* REVISION NOTIFICATION & REMINDER SYSTEM */
@@ -1948,6 +2561,21 @@ function switchTab(name) {
 }
 
 document.querySelectorAll('.tab').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
+
+// Keyboard shortcut: ⌘K / Ctrl+K → focus search bar & switch to All Problems tab
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
+    switchTab('all');
+    const inp = document.getElementById('searchInput');
+    if (inp) { inp.focus(); inp.select(); }
+  }
+  // Escape clears search if focused
+  if (e.key === 'Escape' && document.activeElement?.id === 'searchInput') {
+    clearSearch();
+  }
+});
+
 
 // Deployment API Keys Config (Managed securely via .env file or local storage)
 const DEPLOYMENT_KEYS = {
